@@ -3,27 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#5c1226">
+<meta name="theme-color" content="#4e1022">
 <title>Prova Cega de Vinhos</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍷</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%237a1b33'/><path d='M21 13h22c0 13-3.6 21.5-11 22.4C24.6 34.5 21 26 21 13z' fill='%23fff'/><path d='M22.4 22h19.2c-1 7.4-4.1 12.4-9.6 13-5.5-.6-8.6-5.6-9.6-13z' fill='%23c2405f'/><rect x='30.8' y='35' width='2.4' height='11' rx='1' fill='%23fff'/><rect x='24' y='45.5' width='16' height='3' rx='1.5' fill='%23fff'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --claret: #7b1830;
-    --claret-deep: #561024;
-    --claret-soft: #f6e8ec;
-    --gold: #f1d48b;
-    --bottle: #1f5a40;
-    --bottle-soft: #e3f1e9;
-    --ink: #23161b;
-    --muted: #6b5a60;
-    --line: #ecdfe3;
+    --claret: #7a1b33;
+    --claret-deep: #4e1022;
+    --claret-soft: #f3e6e6;
+    --gold: #a8832f;
+    --gold-light: #ecd59a;
+    --ok: #2f6b4f;
+    --ok-soft: #e5efe8;
+    --ink: #241a1d;
+    --muted: #6e6264;
+    --line: #ebe2d9;
     --paper: #ffffff;
-    --bg: #f8f1f2;
+    --bg: #f6f1ea;
+    --bg-deep: #ece2d6;
     --alert: #a3202b;
-    --shadow: 0 1px 2px rgba(60, 20, 35, .06), 0 8px 24px rgba(60, 20, 35, .07);
+    --shadow: 0 1px 2px rgba(50, 30, 20, .06), 0 6px 18px rgba(50, 30, 20, .06);
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -32,62 +34,69 @@
   html { font-size: 20px; -webkit-text-size-adjust: 100%; }
   body {
     margin: 0; color: var(--ink); min-height: 100vh;
-    background: linear-gradient(180deg, #f1dfe4 0, var(--bg) 340px) no-repeat, var(--bg);
+    background: linear-gradient(180deg, var(--bg-deep) 0, var(--bg) 300px) no-repeat, var(--bg);
     font-family: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     line-height: 1.45;
   }
   #app { max-width: 540px; margin: 0 auto; padding: 14px 16px 64px; }
-  h1, .display { font-family: "Fraunces", Georgia, "Times New Roman", serif; font-weight: 700; letter-spacing: -.01em; }
-  h1 { font-size: 1.9rem; line-height: 1.12; margin: .45em 0 .35em; color: var(--claret-deep); }
-  h2 { font-size: 1.15rem; line-height: 1.25; margin: 0 0 .6em; }
+  h1, h2 { font-family: "Fraunces", Georgia, "Times New Roman", serif; letter-spacing: -.01em; color: var(--claret-deep); }
+  h1 { font-weight: 700; font-size: 1.9rem; line-height: 1.12; margin: .45em 0 .35em; }
+  h2 { font-weight: 600; font-size: 1.2rem; line-height: 1.25; margin: 0 0 .6em; }
   p { margin: .4em 0; }
   .center { text-align: center; }
   .lead { font-size: 1.1rem; color: var(--muted); }
   .small { font-size: .85rem; color: var(--muted); }
+  .eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
 
-  .card { background: var(--paper); border-radius: 22px; padding: 20px 18px; margin: 14px 0; box-shadow: var(--shadow); }
-  .ribbon { background: #fbf2de; color: #6b4e0e; border-radius: 14px; padding: 8px 12px; text-align: center; font-weight: 700; font-size: .85rem; margin-bottom: 12px; }
+  .card { background: var(--paper); border-radius: 18px; padding: 18px; margin: 14px 0; box-shadow: var(--shadow); }
+  .ribbon { background: #f8efdc; color: #5e4510; border-radius: 12px; padding: 8px 12px; text-align: center; font-weight: 700; font-size: .85rem; margin-bottom: 12px; }
+  .offline { background: #3b2b30; color: #fff; border-radius: 12px; padding: 9px 12px; text-align: center; font-weight: 700; font-size: .9rem; margin: 0 0 12px; }
 
   label, .label { display: block; font-weight: 700; margin: 16px 0 6px; }
   input, select {
     width: 100%; font: inherit; font-size: 1.1rem; padding: 14px; color: var(--ink);
-    border: 2px solid #e4d4d9; border-radius: 14px; background: #fff;
+    border: 2px solid #e3d8ce; border-radius: 14px; background: #fff;
   }
-  input::placeholder { color: #b7a6ab; }
+  input::placeholder { color: #ab9f97; }
   input:focus, select:focus { outline: none; border-color: var(--claret); box-shadow: 0 0 0 4px var(--claret-soft); }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
   button { font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
   button:focus-visible { outline: 3px solid var(--claret); outline-offset: 3px; }
 
-  .btn { display: block; width: 100%; min-height: 62px; margin-top: 16px; padding: 14px 18px; border-radius: 16px; border: 2px solid transparent; font-size: 1.1rem; font-weight: 700; transition: transform .08s ease; }
+  .btn { display: block; width: 100%; min-height: 60px; margin-top: 16px; padding: 14px 18px; border-radius: 14px; border: 2px solid transparent; font-size: 1.1rem; font-weight: 700; transition: transform .08s ease; }
   .btn:active { transform: translateY(1px); }
-  .btn.primary, .btn.green { background: linear-gradient(180deg, #8c1e3a, var(--claret)); color: #fff; box-shadow: 0 6px 16px rgba(123, 24, 48, .28); }
+  .btn.primary { background: var(--claret); color: #fff; box-shadow: 0 4px 12px rgba(78, 16, 34, .22); }
   .btn.outline { background: #fff; color: var(--claret); border-color: var(--claret); }
   .btn:disabled { opacity: .35; box-shadow: none; cursor: default; }
   .textbtn { display: block; margin: 14px auto 0; background: none; border: none; color: var(--claret); text-decoration: underline; text-underline-offset: 3px; font-size: .95rem; padding: 10px; min-height: 44px; }
-  .smallbtn { background: var(--claret-soft); border: none; border-radius: 12px; padding: 8px 14px; color: var(--claret-deep); font-weight: 700; font-size: .85rem; min-height: 44px; flex: none; }
+  .textbtn.left { margin: 4px 0 0; padding: 8px 0; }
+  .smallbtn { background: var(--claret-soft); border: none; border-radius: 10px; padding: 8px 14px; color: var(--claret-deep); font-weight: 700; font-size: .85rem; min-height: 44px; flex: none; }
 
-  .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--muted); font-size: .95rem; }
-  .top .code { display: inline-block; background: var(--paper); color: var(--claret); font-weight: 700; letter-spacing: .14em; padding: 5px 10px 5px 12px; border-radius: 99px; margin-right: 6px; box-shadow: var(--shadow); }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--muted); font-size: .95rem; margin-bottom: 4px; }
+  .top .code { display: inline-block; background: var(--paper); color: var(--claret); font-weight: 700; letter-spacing: .14em; padding: 5px 10px 5px 12px; border-radius: 99px; margin-right: 8px; box-shadow: var(--shadow); }
 
   .brand { text-align: center; padding: 36px 0 8px; }
-  .logo { width: 84px; height: 84px; display: block; margin: 0 auto 6px; filter: drop-shadow(0 8px 16px rgba(86, 16, 36, .25)); }
+  .logo { width: 80px; height: 80px; display: block; margin: 0 auto 6px; filter: drop-shadow(0 6px 14px rgba(78, 16, 34, .22)); }
+  .logo.sm { width: 52px; height: 52px; }
   .brand h1 { font-size: 2.2rem; margin: .35em 0 .1em; }
-  .stage { text-align: center; padding: 22px 0 0; }
-  .stage .bigicon { font-size: 3.4rem; line-height: 1; }
+  .stage { text-align: center; padding: 20px 0 0; }
 
-  .list-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .list-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); min-height: 56px; }
   .list-row:last-child { border-bottom: none; }
   .sub { display: block; color: var(--muted); font-size: .9rem; }
   .empty { color: var(--muted); }
+  .names { display: flex; flex-wrap: wrap; gap: 8px; }
+  .name { background: var(--bg); border-radius: 99px; padding: 7px 14px; font-weight: 700; font-size: .95rem; }
+  .name.me { background: var(--claret-soft); color: var(--claret-deep); }
 
   .wine-item { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .wine-item:last-child { border-bottom: none; }
   .wine-item .acts { display: flex; gap: 8px; margin-top: 8px; }
-  .share-box { background: var(--bg); border-radius: 16px; padding: 12px; margin-top: 10px; }
-  .add-form { margin-top: 6px; }
+  .share-box { background: var(--bg); border-radius: 14px; padding: 12px; margin-top: 10px; }
+  .mine-tag { display: inline-block; background: var(--ok-soft); color: var(--ok); font-size: .75rem; font-weight: 700; padding: 1px 8px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
 
   .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
-  .pill { min-height: 52px; padding: 10px 18px; border-radius: 99px; border: 2px solid #e4d4d9; background: #fff; color: var(--ink); font-size: 1rem; font-weight: 700; }
+  .pill { min-height: 50px; padding: 10px 18px; border-radius: 99px; border: 2px solid #e3d8ce; background: #fff; color: var(--ink); font-size: 1rem; font-weight: 700; }
   .pill.on { background: var(--claret); border-color: var(--claret); color: #fff; }
   .pill.on::before { content: "✓ "; }
 
@@ -95,61 +104,65 @@
   .steps li { margin: .55em 0; padding-left: .2em; }
   .steps li::marker { color: var(--claret); font-weight: 700; }
 
-  .waiting { text-align: center; padding: 22px 18px; border-radius: 22px; background: var(--paper); box-shadow: var(--shadow); color: var(--claret-deep); font-weight: 700; font-size: 1.15rem; margin: 14px 0; }
+  .waiting { text-align: center; padding: 22px 18px; border-radius: 18px; background: var(--paper); box-shadow: var(--shadow); color: var(--claret-deep); font-weight: 700; font-size: 1.15rem; margin: 14px 0; }
   .waiting .small { display: block; font-weight: 400; margin-top: 6px; }
 
-  .invite h2 { margin-bottom: 10px; }
   #qr { display: flex; justify-content: center; padding: 6px; }
   #qr img, #qr canvas { max-width: 100%; height: auto; }
   .bigcode { display: block; text-align: center; font-size: 2.6rem; font-weight: 700; letter-spacing: .28em; color: var(--claret); margin: 6px 0 2px; }
 
   /* The bottle label with arrows: the one bold element */
-  .label-wrap { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 16px 0 10px; }
-  .arrow { flex: none; width: 56px; height: 72px; border-radius: 16px; border: none; background: var(--paper); box-shadow: var(--shadow); color: var(--claret); font-size: 2rem; font-weight: 700; }
+  .label-wrap { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 14px 0 10px; }
+  .arrow { flex: none; width: 56px; height: 72px; border-radius: 14px; border: none; background: var(--paper); box-shadow: var(--shadow); color: var(--claret); font-size: 2rem; font-weight: 700; }
   .arrow:disabled { opacity: .3; box-shadow: none; cursor: default; }
   .bottle-label {
     width: min(210px, 50vw); padding: 14px 10px 12px; text-align: center; background: #fff;
     border: 3px solid var(--claret); border-radius: 50% / 38%;
-    box-shadow: inset 0 0 0 6px #fff, inset 0 0 0 8px var(--claret), 0 10px 24px rgba(86, 16, 36, .12);
+    box-shadow: inset 0 0 0 6px #fff, inset 0 0 0 8px var(--claret), 0 10px 24px rgba(78, 16, 34, .12);
   }
   .bottle-label .cap { font-size: .9rem; color: var(--muted); }
   .bottle-label .num { font-family: "Fraunces", Georgia, serif; font-size: 4.2rem; font-weight: 700; line-height: 1; color: var(--claret-deep); }
   .bottle-label .of { font-size: .9rem; color: var(--muted); }
 
   .prompt { text-align: center; font-size: 1.15rem; font-weight: 700; margin: 8px 0; color: var(--claret-deep); }
-  .saved { text-align: center; padding: 10px; border-radius: 14px; background: var(--bottle-soft); color: var(--bottle); font-weight: 700; margin: 8px 0; }
+  .saved { text-align: center; padding: 10px; border-radius: 12px; background: var(--ok-soft); color: var(--ok); font-weight: 700; margin: 8px 0; }
   .scores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
   .score {
-    min-height: 80px; border-radius: 18px; border: 2px solid transparent; background: #fff; color: var(--ink); box-shadow: var(--shadow);
+    min-height: 80px; border-radius: 16px; border: 2px solid transparent; background: #fff; color: var(--ink); box-shadow: var(--shadow);
     display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px;
   }
   .score .n { font-size: 2.1rem; font-weight: 700; line-height: 1; }
   .score .left { font-size: .8rem; color: var(--muted); margin-top: 5px; }
-  .score.sel { background: linear-gradient(180deg, #8c1e3a, var(--claret)); color: #fff; box-shadow: 0 6px 16px rgba(123, 24, 48, .3); }
+  .score.sel { background: var(--claret); color: #fff; box-shadow: 0 4px 14px rgba(78, 16, 34, .28); }
   .score.sel .left { color: #fff; }
-  .score:disabled { background: transparent; color: #c2b3b8; border: 2px dashed #e4d4d9; box-shadow: none; cursor: default; }
-  .score:disabled .left { color: #c2b3b8; }
+  .score:disabled { background: transparent; color: #bfb3ad; border: 2px dashed #e3d8ce; box-shadow: none; cursor: default; }
+  .score:disabled .left { color: #bfb3ad; }
 
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { min-width: 60px; padding: 8px 10px; border-radius: 14px; border: 2px solid var(--line); background: #fff; display: flex; flex-direction: column; align-items: center; font-size: .8rem; color: var(--muted); }
+  .chip { min-width: 60px; padding: 8px 10px; border-radius: 12px; border: 2px solid var(--line); background: #fff; display: flex; flex-direction: column; align-items: center; font-size: .8rem; color: var(--muted); }
   .chip b { font-size: 1.3rem; color: var(--ink); }
   .chip.todo { border-style: dashed; }
   .chip.active { border-color: var(--claret); box-shadow: 0 0 0 2px var(--claret); }
 
   .tag-num { flex: none; width: 52px; height: 52px; border-radius: 50%; border: 3px solid var(--claret); display: flex; align-items: center; justify-content: center; font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: 1.4rem; color: var(--claret-deep); background: #fff; }
+  .tag-num.sm { width: 38px; height: 38px; border-width: 2px; font-size: 1.05rem; }
   .reveal-row { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; }
   .reveal-row .rv { flex: 1; min-width: 0; }
   .reveal-row .sub { margin: 4px 0 0 4px; }
-  .majority { color: var(--bottle); font-weight: 700; }
+  .majority { color: var(--ok); font-weight: 700; }
 
-  .winner { text-align: center; background: linear-gradient(160deg, #8c1e3a 0%, #4a0d1f 100%); color: #fff; border-radius: 26px; padding: 26px 18px 24px; margin: 14px 0; box-shadow: 0 14px 32px rgba(74, 13, 31, .35); }
-  .winner .medal { font-size: 3.2rem; line-height: 1; }
-  .winner .wname { font-family: "Fraunces", Georgia, serif; font-size: 1.9rem; font-weight: 700; line-height: 1.15; margin: 12px 0 4px; }
-  .winner .avg { font-size: 3rem; font-weight: 700; margin-top: 12px; line-height: 1; color: var(--gold); }
+  .winner { text-align: center; background: linear-gradient(160deg, #84213b 0%, #46101f 100%); color: #fff; border-radius: 22px; padding: 22px 18px; margin: 14px 0; box-shadow: 0 12px 28px rgba(70, 16, 31, .3); }
+  .winner .eyebrow { color: var(--gold-light); }
+  .winner .wname { font-family: "Fraunces", Georgia, serif; font-size: 1.9rem; font-weight: 700; line-height: 1.15; margin: 8px 0 4px; }
+  .winner .avg { font-family: "Fraunces", Georgia, serif; font-size: 3rem; font-weight: 700; margin-top: 10px; line-height: 1; color: var(--gold-light); }
   .winner .soft { opacity: .85; font-size: .9rem; }
   .reveal { animation: pop .7s ease-out both; }
-  @keyframes pop { from { transform: scale(.85); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes pop { from { transform: scale(.9); opacity: 0; } to { transform: none; opacity: 1; } }
   @media (prefers-reduced-motion: reduce) { .reveal { animation: none; } }
+
+  .tabs { display: flex; gap: 4px; background: var(--bg-deep); border-radius: 14px; padding: 4px; margin: 18px 0 4px; }
+  .tab { flex: 1; min-height: 48px; border: none; border-radius: 10px; background: transparent; color: var(--muted); font-weight: 700; font-size: .9rem; padding: 8px 4px; }
+  .tab.on { background: var(--paper); color: var(--claret-deep); box-shadow: var(--shadow); }
 
   details.rank { border-bottom: 1px solid var(--line); }
   details.rank:last-child { border-bottom: none; }
@@ -157,38 +170,66 @@
   details.rank summary::-webkit-details-marker { display: none; }
   details.rank summary::after { content: "›"; color: var(--muted); font-size: 1.5rem; line-height: 1; transition: transform .2s ease; }
   details.rank[open] summary::after { transform: rotate(90deg); }
-  .rk { flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--claret-soft); color: var(--claret-deep); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; }
-  .rk.medal { background: none; font-size: 2rem; }
+  .rk { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--bg); color: var(--claret-deep); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.05rem; }
+  .rk.r1 { background: linear-gradient(160deg, #dcb75c, #a9832b); color: #fff; }
+  .rk.r2 { background: linear-gradient(160deg, #c9ccd1, #989ca3); color: #fff; }
+  .rk.r3 { background: linear-gradient(160deg, #d29b6c, #a2673a); color: #fff; }
   .rank .info { flex: 1; min-width: 0; }
   .rank .av { font-size: 1.4rem; font-weight: 700; color: var(--claret-deep); text-align: right; line-height: 1.1; }
   .rank .avl { display: block; font-size: .7rem; font-weight: 400; color: var(--muted); }
-  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .stat { background: var(--bg); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; min-width: 0; }
-  .stat .ic { font-size: 1.6rem; line-height: 1; }
-  .stat .st { font-size: .8rem; color: var(--muted); margin-top: 6px; }
-  .stat b { font-size: 1.05rem; line-height: 1.2; margin-top: 2px; overflow-wrap: anywhere; color: var(--claret-deep); }
-  .stat .sd { font-size: .8rem; color: var(--muted); margin-top: 2px; }
-  .rank .more { padding: 0 4px 14px 56px; }
-  .mine-tag { display: inline-block; background: var(--bottle-soft); color: var(--bottle); font-size: .75rem; font-weight: 700; padding: 1px 8px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
+  .rank .more { padding: 0 4px 14px 52px; }
+  .nw { white-space: nowrap; }
   .nrow { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; font-size: 1rem; }
   .nrow b { color: var(--claret-deep); }
-  .facts { background: var(--bg); border-radius: 12px; padding: 8px 10px; margin: 4px 0 8px; font-size: .9rem; }
-  .ok { color: var(--bottle); font-weight: 700; }
-  .bad { color: var(--alert); }
+  .facts { background: var(--bg); border-radius: 10px; padding: 8px 10px; margin: 4px 0 8px; font-size: .9rem; }
+
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat { background: var(--bg); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; min-width: 0; }
+  .stat .st { font-size: .8rem; color: var(--muted); }
+  .stat b { font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; line-height: 1.2; margin-top: 3px; overflow-wrap: anywhere; color: var(--claret-deep); }
+  .stat .sd { font-size: .8rem; color: var(--muted); margin-top: 2px; }
+
+  /* All the grades: wines down, people across; the wine column stays put while scrolling sideways */
+  .matrix-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -6px; padding: 0 6px 4px; }
+  table.matrix { border-collapse: separate; border-spacing: 4px; font-size: .95rem; }
+  .matrix th, .matrix td { text-align: center; }
+  .matrix thead th { font-size: .78rem; color: var(--muted); font-weight: 700; padding: 0 2px 4px; white-space: nowrap; }
+  .matrix thead th.me { color: var(--claret); }
+  .matrix .wcol { position: sticky; left: 0; z-index: 1; background: var(--paper); text-align: left; min-width: 112px; max-width: 132px; padding: 4px 8px 4px 0; font-weight: 700; font-size: .88rem; line-height: 1.2; }
+  .matrix .wcol .wo { display: block; font-weight: 400; font-size: .75rem; color: var(--muted); }
+  .matrix td { vertical-align: middle; }
+  .matrix td.v { padding: 0; }
+  .pip { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; font-weight: 700; }
+  .pip.v0 { background: #f3eded; }
+  .pip.v1 { background: #ead2d5; }
+  .pip.v2 { background: #c26d80; color: #fff; }
+  .pip.v3 { background: var(--claret); color: #fff; }
+  .pip.none { color: #bfb3ad; }
+  .matrix .acol { font-weight: 700; color: var(--claret-deep); padding: 0 4px 0 8px; white-space: nowrap; }
+  .matrix tfoot th, .matrix tfoot td { font-size: .78rem; color: var(--muted); font-weight: 700; padding-top: 6px; white-space: nowrap; }
+
+  .gwine { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .gwine:last-child { border-bottom: none; }
+  .gw-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .gp { display: flex; gap: 10px; padding: 4px 0; font-size: .95rem; }
+  .gp .gn { flex: none; width: 82px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gp .gv { flex: 1; min-width: 0; }
+  .hit { color: var(--ok); font-weight: 700; }
+  .miss { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(110, 98, 100, .55); }
 
   #toast {
     position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 140%);
-    width: min(520px, calc(100% - 28px)); padding: 16px 18px; border-radius: 16px; font-weight: 700; font-size: 1.05rem;
+    width: min(520px, calc(100% - 28px)); padding: 16px 18px; border-radius: 14px; font-weight: 700; font-size: 1.05rem;
     background: var(--alert); color: #fff; box-shadow: 0 10px 30px rgba(40, 10, 20, .3); transition: transform .25s ease; z-index: 10; text-align: center;
   }
-  #toast.ok { background: var(--bottle); }
+  #toast.ok { background: var(--ok); }
   #toast.show { transform: translate(-50%, 0); }
   #toast:not(.show) { visibility: hidden; transition: transform .25s ease, visibility 0s .25s; }
 
   /* In-app dialog (replaces the browser's "site says..." boxes) */
   #modal { position: fixed; inset: 0; background: rgba(40, 12, 22, .5); display: flex; align-items: flex-end; justify-content: center; z-index: 20; padding: 16px; }
   #modal[hidden] { display: none; }
-  #modal .sheet { background: #fff; border-radius: 26px; padding: 24px 18px 18px; width: min(520px, 100%); max-height: 85vh; overflow: auto; font-size: 1.15rem; box-shadow: 0 20px 50px rgba(40, 12, 22, .3); }
+  #modal .sheet { background: #fff; border-radius: 22px; padding: 22px 18px 18px; width: min(520px, 100%); max-height: 85vh; overflow: auto; font-size: 1.15rem; box-shadow: 0 20px 50px rgba(40, 12, 22, .3); }
   #modal .sheet ul { padding-left: 1.2em; margin: .5em 0; }
   #modal .btns { display: flex; gap: 12px; }
   #modal .btns .btn { flex: 1; }
@@ -254,11 +295,11 @@ const MAX_SCORE = 10;   // scores go from 0 to 10
 const PER_SCORE = 2;    // each score can be given at most twice
 const MAX_WINES = 20;   // 11 scores x 2 = 22, enough for 20 bottles
 
+/* Bump APP_VERSION and write the same text in version.txt on every change, so phones pick up the new page. */
+const APP_VERSION = '2026-10-19.1';
+
 /* Only phones that opened the host link (?anfitriao=...) can create tastings.
    This is the SHA-256 of that secret, so the secret itself is not in the page. */
-/* Bump APP_VERSION and write the same text in version.txt on every change, so phones pick up the new page. */
-const APP_VERSION = '2026-10-12.5';
-
 const HOST_HASH = '49214f3a6d9f8fdf74917bea9434172be1b120fa94d96739f5c2c57320a5e5dd';
 
 const PARAMS = new URLSearchParams(location.search);
@@ -272,8 +313,8 @@ const S = {
   view: 'home', joinCode: null, canCreate: false, hostKey: null,
   code: null, guestId: null, hostPin: null, isHost: false,
   event: null, guests: [], wines: [], ratings: {}, guesses: {}, reveals: {}, guestsLoaded: false,
-  sel: null, showGuess: false, showMore: false, shareEdit: null, pending: false, unsub: [],
-  lastKey: null, clearDraft: false
+  sel: null, showGuess: false, showMore: false, shareEdit: null, resTab: 'rank',
+  offline: false, pending: false, unsub: [], resub: null, lastKey: null, clearDraft: false
 };
 
 /* ---------- small helpers ---------- */
@@ -282,15 +323,21 @@ const val = id => { const el = document.getElementById(id); return el ? el.value
 const plural = (n, one, many) => n + ' ' + (n === 1 ? one : many);
 const fmt = v => v == null ? '–' : v.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const listPt = a => a.length <= 1 ? (a[0] || '') : a.slice(0, -1).join(', ') + ' e ' + a[a.length - 1];
+const norm = s => String(s == null ? '' : s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9.,]+/g, ' ').trim();
+const firstName = n => String(n || '').trim().split(/\s+/)[0] || '';
+const buzz = p => { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} };
+
+/* The phone remembers which tasting it is in, so that closing the browser, a reload or a dead battery
+   never costs anyone their place: the link, the QR code or "Voltar à prova" bring them straight back. */
 const SKEY = 'blindWineTasting.v2';
-const SESSION_DAYS = 2; // a saved tasting is only reopened for a couple of days
-function loadSession() {
+const RESUME_HOURS = 24;
+function loadSession(hours) {
   try {
     const s = JSON.parse(localStorage.getItem(SKEY));
-    return s && s.savedAt && Date.now() - s.savedAt < SESSION_DAYS * 864e5 ? s : null;
+    return s && s.code && s.guestId && s.savedAt && Date.now() - s.savedAt < (hours || 48) * 36e5 ? s : null;
   } catch (e) { return null; }
 }
-function saveSession() { if (DEMO) return; try { localStorage.setItem(SKEY, JSON.stringify({ code: S.code, guestId: S.guestId, hostPin: S.hostPin, savedAt: Date.now() })); } catch (e) {} }
+function saveSession() { if (DEMO || !S.code) return; try { localStorage.setItem(SKEY, JSON.stringify({ code: S.code, guestId: S.guestId, hostPin: S.hostPin, savedAt: Date.now() })); } catch (e) {} }
 function clearSession() { if (DEMO) return; try { localStorage.removeItem(SKEY); } catch (e) {} }
 // The address always says which tasting this phone is in; the host link keeps its key, so a reload stays a host link.
 function setUrl(code) {
@@ -309,7 +356,6 @@ const myScores = () => S.ratings[S.guestId] || {};
 const owners = w => Array.isArray(w.guestIds) && w.guestIds.length ? w.guestIds : (w.guestId ? [w.guestId] : []);
 const owns = (w, id) => owners(w).indexOf(id) >= 0;
 const broughtBy = w => listPt(owners(w).map(guestName));
-const buzz = p => { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) {} };
 const maxScore = () => (S.event && S.event.maxScore) || MAX_SCORE;
 const perScore = () => (S.event && S.event.perScore) || PER_SCORE;
 
@@ -339,6 +385,16 @@ function ask(html, yes, no) {
 }
 const tell = html => ask(html, 'OK', null);
 
+/* Firestore applies a write on this phone at once and sends it as soon as the connection allows, so the screen
+   never waits for the server: a weak connection can't freeze the buttons. A refused write is reported. */
+function send(p) {
+  return Promise.resolve(p).catch(err => { console.error(err); toast('Não foi possível guardar. Verifique a internet.'); });
+}
+/* Reads that need the server (joining, creating) give up after a while instead of hanging. */
+function within(p, ms) {
+  return Promise.race([p, new Promise((_, fail) => setTimeout(() => fail(new Error('timeout')), ms || 12000))]);
+}
+
 function randCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // no I or O, easy to read
   let c = ''; for (let i = 0; i < 4; i++) c += chars[Math.floor(Math.random() * chars.length)];
@@ -352,7 +408,7 @@ async function sha256(s) {
 
 /* ---------- wine details and guesses ---------- */
 const FIELDS = [
-  { k: 'name', label: 'Nome' },
+  { k: 'name', label: 'Nome', list: 'dl-wines' },
   { k: 'country', label: 'País', list: 'dl-country' },
   { k: 'region', label: 'Região', list: 'dl-region' },
   { k: 'year', label: 'Ano', mode: 'numeric', half: true },
@@ -360,11 +416,11 @@ const FIELDS = [
   { k: 'grapes', label: 'Castas', list: 'dl-grape', hint: 'ex.: Touriga Nacional, Tinta Roriz' }
 ];
 const DETAIL_FIELDS = FIELDS.filter(f => f.k !== 'name');
-const norm = s => String(s == null ? '' : s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9.,]+/g, ' ').trim();
 const textHit = (g, r) => { g = norm(g); r = norm(r); return !!g && !!r && (g === r || (g.length >= 3 && r.indexOf(g) >= 0) || (r.length >= 3 && g.indexOf(r) >= 0)); };
 const splitGrapes = s => String(s || '').split(/[,;/+]|\se\s/i).map(x => x.trim()).filter(Boolean);
 const toNum = s => { const v = parseFloat(String(s == null ? '' : s).replace(',', '.')); return isNaN(v) ? null : v; };
-const factsLine = w => [w.country, w.region, w.year, w.abv ? String(w.abv).replace('.', ',') + '%' : '', w.grapes].filter(Boolean).join(' · ');
+const abvText = v => String(v).replace('.', ',') + '%';
+const factsLine = w => [w.country, w.region, w.year, w.abv ? abvText(w.abv) : '', w.grapes].filter(Boolean).join(' · ');
 
 // null when there is nothing to compare; otherwise { ok, note }
 function judge(k, guess, wine) {
@@ -379,11 +435,13 @@ function judge(k, guess, wine) {
   return { ok: textHit(guess, real) };
 }
 
-/* Keep the screen on while the tasting is running, so nobody has to unlock the phone every time. */
-let wakeLock = null, wakeBusy = false;
+/* Keep the screen on while the phone is being used during the tasting, and let it sleep after a few
+   untouched minutes so a long evening doesn't drain the battery. */
+let wakeLock = null, wakeBusy = false, lastTouch = Date.now();
 async function syncWakeLock() {
   if (!('wakeLock' in navigator) || wakeBusy) return;
-  const want = !!(S.event && ['prep', 'tasting', 'reveal'].indexOf(S.event.phase) >= 0) && document.visibilityState === 'visible';
+  const want = !!(S.event && ['prep', 'tasting', 'reveal'].indexOf(S.event.phase) >= 0) &&
+    document.visibilityState === 'visible' && Date.now() - lastTouch < 4 * 60000;
   wakeBusy = true;
   try {
     if (want && !wakeLock) {
@@ -394,12 +452,15 @@ async function syncWakeLock() {
     }
   } catch (e) {} finally { wakeBusy = false; }
 }
+['pointerdown', 'keydown'].forEach(t => document.addEventListener(t, () => { lastTouch = Date.now(); if (!wakeLock) syncWakeLock(); }, { passive: true }));
 document.addEventListener('visibilitychange', syncWakeLock);
+setInterval(syncWakeLock, 30000);
 
 /* Firestore sometimes loses its connection and then waits half a minute before trying again, so the phone
    misses live changes. If this phone's data has not been confirmed by the server for a few seconds, or the
    screen has just come back on, reconnect at once. Reconnecting costs no extra reads. */
-let staleTimer = null, outOfSync = false;
+let staleTimer = null, offlineTimer = null, outOfSync = false;
+function setOffline(v) { if (S.offline !== v) { S.offline = v; render(); } }
 function reconnect() {
   clearTimeout(staleTimer); staleTimer = null;
   if (DEMO || !fs || !fs.disableNetwork) return;
@@ -408,23 +469,49 @@ function reconnect() {
 }
 function watchSync(snap) {
   outOfSync = snap.metadata.fromCache;
-  if (!outOfSync) { clearTimeout(staleTimer); staleTimer = null; }
-  else if (!staleTimer) staleTimer = setTimeout(reconnect, 4000);
+  if (!outOfSync) {
+    clearTimeout(staleTimer); staleTimer = null;
+    clearTimeout(offlineTimer); offlineTimer = null;
+    setOffline(false);
+  } else {
+    if (!staleTimer) staleTimer = setTimeout(reconnect, 4000);
+    if (!offlineTimer) offlineTimer = setTimeout(() => { offlineTimer = null; if (outOfSync) setOffline(true); }, 6000);
+  }
 }
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && S.code) reconnect(); });
+// Safety net for a connection that looks healthy but has quietly stopped delivering: refresh it every 20 s while a
+// tasting is on screen. Firestore resumes where it left off, so this costs no extra reads.
+setInterval(() => { if (S.code && document.visibilityState === 'visible') reconnect(); }, 20000);
+window.addEventListener('offline', () => setOffline(true));
+window.addEventListener('online', () => { setOffline(false); if (S.code) reconnect(); });
 
 /* ---------- live data ---------- */
-function stopEvent() {
+function stopListening() {
   S.unsub.forEach(u => { try { u(); } catch (e) {} });
-  clearTimeout(staleTimer); staleTimer = null; outOfSync = false;
-  Object.assign(S, { unsub: [], code: null, guestId: null, hostPin: null, isHost: false, event: null, guests: [], wines: [], ratings: {}, guesses: {}, reveals: {}, guestsLoaded: false, sel: null, showGuess: false, showMore: false, shareEdit: null });
-  clearSession();
+  S.unsub = [];
+  clearTimeout(S.resub); S.resub = null;
+  clearTimeout(staleTimer); staleTimer = null;
+  clearTimeout(offlineTimer); offlineTimer = null; outOfSync = false;
+}
+
+// Leave the tasting screen. The phone keeps remembering the tasting (so "Voltar à prova" works) unless told to forget it.
+function leaveEvent(forget) {
+  stopListening();
+  if (forget) clearSession();
+  Object.assign(S, { code: null, guestId: null, hostPin: null, isHost: false, event: null, guests: [], wines: [], ratings: {}, guesses: {}, reveals: {},
+    guestsLoaded: false, sel: null, showGuess: false, showMore: false, shareEdit: null, resTab: 'rank' });
   syncWakeLock();
+}
+
+// A listener that fails (lost connection, busy server) stops for good, so start them all again shortly.
+function listenerFailed(err) {
+  console.error(err);
+  if (S.resub || !S.code) return;
+  S.resub = setTimeout(() => { S.resub = null; if (S.code) { stopListening(); subscribe(); } }, 4000);
 }
 
 function subscribe() {
   const ev = evRef();
-  const onErr = err => { console.error(err); toast('Sem ligação. Verifique a internet.'); };
   if (!DEMO) {
     S.unsub.push(ev.onSnapshot({ includeMetadataChanges: true }, watchSync, () => {}));
     // The first poll opened while the listeners start up can get stuck for ~30 s without the SDK noticing.
@@ -433,51 +520,52 @@ function subscribe() {
     S.unsub.push(() => clearTimeout(t));
   }
   S.unsub.push(ev.onSnapshot(snap => {
-    if (!snap.exists) { stopEvent(); setUrl(null); S.view = 'home'; toast('Esta prova já terminou.'); render(true); return; }
+    if (!snap.exists) { leaveEvent(true); setUrl(null); S.view = 'home'; toast('Esta prova já terminou.'); render(true); return; }
     const prev = S.event;
     S.event = snap.data();
     S.isHost = !!(S.hostPin && S.event.hostPin === S.hostPin);
+    saveSession();
     const moved = prev && prev.phase !== S.event.phase;
     if (moved) {
-      S.shareEdit = null; S.showGuess = false; S.sel = null;
+      S.shareEdit = null; S.showGuess = false; S.sel = null; S.resTab = 'rank';
       const ph = S.event.phase;
-      if (ph === 'tasting' && prev.phase === 'prep') { toast('A prova começou!', 'ok'); buzz([80, 80, 80]); }
+      if (ph === 'tasting' && prev.phase === 'prep') { toast('A prova começou.', 'ok'); buzz([80, 80, 80]); }
       else if (ph === 'reveal') buzz([80, 80, 80]);
       else if (ph === 'done') buzz([150, 80, 150]);
     }
     render();
     if (moved) window.scrollTo(0, 0);
-  }, onErr));
+  }, listenerFailed));
   S.unsub.push(ev.collection('guests').onSnapshot(q => {
     S.guests = q.docs.map(d => Object.assign({ id: d.id }, d.data())).sort((a, b) => (a.joinedAt || 0) - (b.joinedAt || 0));
     S.guestsLoaded = true;
     if (S.guestId && !S.guests.some(g => g.id === S.guestId)) {
-      const code = S.code; stopEvent(); S.joinCode = code; S.view = 'join'; setUrl(code);
-      toast('Escreva o seu nome para entrar.'); render(true); return;
+      // Removed by the host, or the whole tasting is gone: wait a moment so the second case can show itself first.
+      const code = S.code;
+      setTimeout(() => {
+        if (S.code !== code || S.guests.some(g => g.id === S.guestId)) return;
+        leaveEvent(true); S.joinCode = code; S.view = 'join'; setUrl(code);
+        toast('Escreva o seu nome para entrar.'); render(true);
+      }, 2000);
     }
     render();
-  }, onErr));
+  }, listenerFailed));
   S.unsub.push(ev.collection('wines').onSnapshot(q => {
     S.wines = q.docs.map(d => Object.assign({ id: d.id }, d.data())).sort((a, b) => (a.number || 0) - (b.number || 0) || (a.createdAt || 0) - (b.createdAt || 0));
     render();
-  }, onErr));
+  }, listenerFailed));
   S.unsub.push(ev.collection('ratings').onSnapshot(q => {
     const r = {}, g = {}, v = {};
     q.docs.forEach(d => { const x = d.data(); r[d.id] = x.scores || {}; g[d.id] = x.guesses || {}; v[d.id] = x.reveal || {}; });
     S.ratings = r; S.guesses = g; S.reveals = v; render();
-  }, onErr));
+  }, listenerFailed));
 }
 
-async function findOrCreateGuest(code, name) {
-  const gc = fs.collection('events').doc(code).collection('guests');
-  const snap = await gc.get();
-  const same = snap.docs.find(d => (d.data().name || '').trim().toLowerCase() === name.toLowerCase());
-  if (same) { // same name = same person coming back
-    if (same.data().left) await gc.doc(same.id).update({ left: false });
-    return same.id;
-  }
-  const ref = await gc.add({ name, joinedAt: Date.now() });
-  return ref.id;
+// Names match without caring about capitals or accents: "joao" finds "João".
+async function findGuest(code, name) {
+  const snap = await within(fs.collection('events').doc(code).collection('guests').get());
+  const n = norm(name);
+  return snap.docs.find(d => norm(d.data().name) === n) || null;
 }
 
 function enterEvent(code, guestId, pin) {
@@ -485,12 +573,14 @@ function enterEvent(code, guestId, pin) {
   saveSession(); setUrl(code); subscribe(); render(true);
 }
 
+// The tasting must exist on the server before anyone listens to it: the database rules only allow reading its
+// guests, bottles and votes once it does. So this waits for the server, with a time limit.
 async function newEvent(code, name) {
   const ev = fs.collection('events').doc(code);
   const g = ev.collection('guests').doc();
   const pin = String(Math.floor(1000 + Math.random() * 9000));
-  await ev.set({ createdAt: Date.now(), hostPin: pin, hostGuest: g.id, phase: 'setup', current: 0, total: 0, maxScore: MAX_SCORE, perScore: PER_SCORE });
-  await g.set({ name, joinedAt: Date.now() });
+  await within(ev.set({ createdAt: Date.now(), hostPin: pin, hostGuest: g.id, phase: 'setup', total: 0, maxScore: MAX_SCORE, perScore: PER_SCORE }));
+  await within(g.set({ name, joinedAt: Date.now() }));
   return { gid: g.id, pin };
 }
 
@@ -544,51 +634,81 @@ const A = {
   home() { S.view = 'home'; render(true); },
   goCreate() { S.view = 'create'; render(true); },
   goHostLogin() { S.view = 'hostLogin'; render(true); },
+  reload() { location.reload(); },
+
+  resume() {
+    const s = loadSession(RESUME_HOURS);
+    if (s) enterEvent(s.code, s.guestId, s.hostPin); else render(true);
+  },
 
   goJoin() {
     const c = val('code').toUpperCase().replace(/[^A-Z]/g, '');
     if (c.length !== 4) return toast('Escreva o código da prova (4 letras).');
-    S.joinCode = c; S.view = 'join'; render(true);
+    const s = loadSession();
+    if (s && s.code === c) return enterEvent(c, s.guestId, s.hostPin); // this phone was already in it
+    S.joinCode = c; S.view = 'join'; setUrl(c); render(true);
   },
 
   async join() {
     const name = val('name');
     if (!name) return toast('Escreva o seu nome.');
     const code = S.joinCode;
-    const ev = await fs.collection('events').doc(code).get();
+    const ev = await within(fs.collection('events').doc(code).get());
     if (!ev.exists) { S.view = 'home'; setUrl(null); render(true); return toast('Não existe nenhuma prova com o código ' + code + '.'); }
-    const gid = await findOrCreateGuest(code, name);
-    const old = loadSession();
-    const pin = old && old.code === code ? old.hostPin : null;
-    enterEvent(code, gid, pin);
+    const saved = loadSession();
+    const guests = fs.collection('events').doc(code).collection('guests');
+    const same = await findGuest(code, name);
+    let gid;
+    if (same) {
+      // Same name: the same person coming back (new phone, dead battery), or someone else with that name.
+      const known = saved && saved.code === code && saved.guestId === same.id;
+      if (!known && !await ask('Já há <b>' + esc(same.data().name) + '</b> nesta prova.<br>É você?', 'Sou eu', 'Não sou')) {
+        return toast('Escreva também o apelido.');
+      }
+      gid = same.id;
+      if (same.data().left) send(guests.doc(gid).update({ left: false }));
+    } else {
+      const ref = guests.doc();
+      send(ref.set({ name, joinedAt: Date.now() }));
+      gid = ref.id;
+    }
+    enterEvent(code, gid, saved && saved.code === code ? saved.hostPin : null);
   },
 
   async create() {
-    if (!S.canCreate) return toast('Só o anfitrião pode criar provas.');
+    if (!S.canCreate) return;
     const name = val('name');
     if (!name) return toast('Escreva o seu nome.');
     let code = null;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 8 && !code; i++) {
       const c = randCode();
-      const s = await fs.collection('events').doc(c).get();
-      if (!s.exists) { code = c; break; }
+      const s = await within(fs.collection('events').doc(c).get());
+      if (!s.exists) code = c;
     }
     if (!code) return toast('Não funcionou. Tente outra vez.');
     const r = await newEvent(code, name);
     enterEvent(code, r.gid, r.pin);
   },
 
+  // The host link is the proof of being the host, so getting a tasting back only needs its code.
   async hostLogin() {
+    if (!S.canCreate) return;
     const code = val('code').toUpperCase().replace(/[^A-Z]/g, '');
-    const pin = val('pin'), name = val('name');
-    if (code.length !== 4 || !pin || !name) return toast('Preencha os três campos.');
-    const ev = await fs.collection('events').doc(code).get();
+    if (code.length !== 4) return toast('Escreva o código da prova (4 letras).');
+    const ref = fs.collection('events').doc(code);
+    const ev = await within(ref.get());
     if (!ev.exists) return toast('Não existe nenhuma prova com o código ' + code + '.');
-    if (ev.data().hostPin !== pin) return toast('O PIN do anfitrião não está correto.');
-    const gid = await findOrCreateGuest(code, name);
-    enterEvent(code, gid, pin);
+    const e = ev.data();
+    let gid = e.hostGuest || null;
+    if (gid && !(await within(ref.collection('guests').doc(gid).get())).exists) gid = null;
+    if (!gid) {
+      const g = ref.collection('guests').doc();
+      send(g.set({ name: 'Anfitrião', joinedAt: Date.now() }));
+      send(ref.update({ hostGuest: g.id }));
+      gid = g.id;
+    }
+    enterEvent(code, gid, e.hostPin);
   },
-
 
   pill(d, el) {
     const on = !el.classList.contains('on');
@@ -596,7 +716,7 @@ const A = {
   },
   toggleMore() { S.showMore = !S.showMore; render(true); },
 
-  async addWine() {
+  addWine() {
     if (S.wines.length >= MAX_WINES) return toast('Já há ' + MAX_WINES + ' garrafas, o máximo.');
     const name = val('wName');
     if (!name) return toast('Escreva o nome do vinho.');
@@ -606,7 +726,8 @@ const A = {
     const wine = { guestId: ids[0], guestIds: ids, name, number: null, createdAt: Date.now() };
     DETAIL_FIELDS.forEach(f => { wine[f.k] = val('w_' + f.k); });
     wine.year = wine.year.replace(/\D/g, '').slice(0, 4);
-    await evRef().collection('wines').add(wine);
+    // set() on a new id rather than add(): if the connection drops mid-save, the retry can't fail as a duplicate.
+    send(evRef().collection('wines').doc().set(wine));
     S.clearDraft = true; S.showMore = false; render(true);
     toast('Garrafa registada.', 'ok');
   },
@@ -615,12 +736,12 @@ const A = {
     const w = S.wines.find(x => x.id === d.id);
     if (!w || !await ask('Remover a garrafa <b>' + esc(w.name) + '</b>?', 'Remover')) return;
     if (S.shareEdit === d.id) S.shareEdit = null;
-    await wineRef(d.id).delete();
+    send(wineRef(d.id).delete());
   },
 
   editOwners(d) { S.shareEdit = S.shareEdit === d.id ? null : d.id; render(true); },
 
-  async toggleOwner(d) {
+  toggleOwner(d) {
     const w = S.wines.find(x => x.id === d.id);
     if (!w) return;
     let ids = owners(w).slice();
@@ -629,7 +750,7 @@ const A = {
       ids = ids.filter(x => x !== d.gid);
     } else ids.push(d.gid);
     if (!S.isHost && ids.indexOf(S.guestId) < 0) S.shareEdit = null;
-    await wineRef(w.id).update({ guestIds: ids, guestId: ids[0] });
+    send(wineRef(w.id).update({ guestIds: ids, guestId: ids[0] }));
   },
 
   async delGuest(d) {
@@ -642,13 +763,13 @@ const A = {
       if (rest.length) b.update(wineRef(w.id), { guestIds: rest, guestId: rest[0] });
       else b.delete(wineRef(w.id));
     });
-    await b.commit();
+    send(b.commit());
   },
 
   // During the tasting someone who went home can be taken out of the "still missing" list.
   async markLeft(d) {
     if (!await ask('<b>' + esc(guestName(d.id)) + '</b> já saiu?', 'Já saiu')) return;
-    await evRef().collection('guests').doc(d.id).update({ left: true });
+    send(evRef().collection('guests').doc(d.id).update({ left: true }));
   },
 
   async closeList() {
@@ -657,18 +778,18 @@ const A = {
     if (!await ask('Fechar a lista com <b>' + n + ' garrafas</b>?', 'Fechar')) return;
     const b = fs.batch();
     S.wines.forEach(w => b.update(wineRef(w.id), { number: null }));
-    b.update(evRef(), { phase: 'prep', current: 0, total: n, maxScore: MAX_SCORE, perScore: PER_SCORE });
-    await b.commit();
+    b.update(evRef(), { phase: 'prep', total: n, maxScore: MAX_SCORE, perScore: PER_SCORE });
+    send(b.commit());
   },
 
   async backToSetup() {
     if (!await ask('Voltar à lista de garrafas?', 'Voltar')) return;
-    await evRef().update({ phase: 'setup' });
+    send(evRef().update({ phase: 'setup' }));
   },
 
   async beginTasting() {
     if (!await ask('Começar a prova?', 'Começar')) return;
-    await evRef().update({ phase: 'tasting', startedAt: Date.now() });
+    send(evRef().update({ phase: 'tasting', startedAt: Date.now() }));
   },
 
   go(d) {
@@ -677,7 +798,7 @@ const A = {
   },
   toggleGuess() { S.showGuess = !S.showGuess; render(true); },
 
-  async score(d) {
+  score(d) {
     const n = S.sel;
     const s = parseInt(d.s, 10);
     const mine = myScores();
@@ -686,12 +807,9 @@ const A = {
     buzz(25);
     S.ratings[S.guestId] = Object.assign({}, mine, { [n]: s });
     render(true);
-    // Not awaited: Firestore keeps the score on the phone and sends it in the background,
-    // so a slow connection never blocks the next tap.
-    myRatingRef().set({ scores: { [n]: s } }, { merge: true })
-      .catch(err => { console.error(err); toast('Nota não guardada. Toque outra vez.'); });
+    send(myRatingRef().set({ scores: { [n]: s } }, { merge: true }));
     const me = S.guests.find(g => g.id === S.guestId);
-    if (me && me.left) evRef().collection('guests').doc(S.guestId).update({ left: false }).catch(() => {});
+    if (me && me.left) send(evRef().collection('guests').doc(S.guestId).update({ left: false }));
   },
 
   async finish() {
@@ -701,7 +819,7 @@ const A = {
         `<li>${esc(m.g.name)}: ${m.miss.length === 1 ? 'vinho ' : 'vinhos '}${listPt(m.miss.map(String))}</li>`).join('') + '</ul>');
     }
     if (!await ask('Terminar a prova?', 'Terminar')) return;
-    await evRef().update({ phase: 'reveal' });
+    send(evRef().update({ phase: 'reveal' }));
   },
 
   async showResults() {
@@ -716,40 +834,42 @@ const A = {
       if (w.number !== n) b.update(wineRef(w.id), { number: n });
     });
     b.update(evRef(), { phase: 'done', finishedAt: Date.now() });
-    await b.commit();
+    send(b.commit());
   },
 
   async backToTasting() {
     if (!await ask('Voltar à prova?', 'Voltar')) return;
-    await evRef().update({ phase: 'tasting' });
+    send(evRef().update({ phase: 'tasting' }));
   },
 
   async reopen() {
     if (!await ask('Voltar à revelação?', 'Voltar')) return;
-    await evRef().update({ phase: 'reveal' });
+    send(evRef().update({ phase: 'reveal' }));
   },
+
+  tab(d) { S.resTab = d.t; render(true); },
 
   async leave() {
     if (DEMO) { if (await ask('Recomeçar a demonstração?', 'Recomeçar')) location.reload(); return; }
     if (!await ask('Sair da prova?', 'Sair')) return;
-    stopEvent(); setUrl(null); S.view = 'home'; render(true);
+    leaveEvent(false); setUrl(null); S.view = 'home'; render(true);
   },
 
   async newTasting() {
     if (!await ask('Criar uma nova prova?', 'Criar')) return;
-    stopEvent(); setUrl(null); S.view = 'create'; render(true);
+    leaveEvent(false); setUrl(null); S.view = 'create'; render(true);
   }
 };
 
-async function saveGuess(n) {
+function saveGuess(n) {
   const g = {};
   FIELDS.forEach(f => { g[f.k] = val('g_' + f.k); });
   const all = Object.assign({}, S.guesses[S.guestId] || {});
   all[n] = g; S.guesses[S.guestId] = all;
-  await myRatingRef().set({ guesses: { [n]: g } }, { merge: true });
+  send(myRatingRef().set({ guesses: { [n]: g } }, { merge: true }));
 }
 
-async function saveRevealVote(k, wineId) {
+function saveRevealVote(k, wineId) {
   const total = S.event.total, mine = Object.assign({}, S.reveals[S.guestId] || {}), full = {};
   for (let i = 1; i <= total; i++) {
     let v = mine[i] || '';
@@ -757,38 +877,39 @@ async function saveRevealVote(k, wineId) {
     full[i] = i === k ? (wineId || '') : v;
   }
   S.reveals[S.guestId] = full;
-  await myRatingRef().set({ reveal: full }, { merge: true });
+  send(myRatingRef().set({ reveal: full }, { merge: true }));
 }
 
 /* ---------- screens ---------- */
-const LOGO = `<svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
-  <circle cx="32" cy="32" r="32" fill="#7b1830"/>
+const logo = cls => `<svg class="${cls}" viewBox="0 0 64 64" aria-hidden="true">
+  <circle cx="32" cy="32" r="32" fill="#7a1b33"/>
   <path d="M21 13h22c0 13-3.6 21.5-11 22.4C24.6 34.5 21 26 21 13z" fill="#fff"/>
   <path d="M22.4 22h19.2c-1 7.4-4.1 12.4-9.6 13-5.5-.6-8.6-5.6-9.6-13z" fill="#c2405f"/>
   <rect x="30.8" y="35" width="2.4" height="11" rx="1" fill="#fff"/>
   <rect x="24" y="45.5" width="16" height="3" rx="1.5" fill="#fff"/></svg>`;
+const brand = (title, lead) => `<div class="brand">${logo('logo')}<h1>${title}</h1>${lead ? `<p class="lead">${lead}</p>` : ''}</div>`;
+const stage = (title, lead) => `<div class="stage">${logo('logo sm')}<h1>${title}</h1>${lead ? `<p class="lead">${lead}</p>` : ''}</div>`;
 
 function homeView() {
-  const brand = `<div class="brand">${LOGO}<h1>Prova Cega de Vinhos</h1></div>`;
-  // Host link: the host only creates tastings (or gets back to one); guests use the plain link with a code.
+  const s = loadSession(RESUME_HOURS);
+  const resume = s ? `<button class="btn primary" data-act="resume">Voltar à prova ${esc(s.code)}</button>` : '';
   if (S.canCreate) {
-    return `${brand}
-    <button class="btn primary" data-act="goCreate">Nova prova</button>
+    return `${brand('Prova Cega de Vinhos')}
+    ${resume}
+    <button class="btn ${s ? 'outline' : 'primary'}" data-act="goCreate">Nova prova</button>
     <button class="textbtn" data-act="goHostLogin">Recuperar uma prova</button>`;
   }
-  return `${brand}
+  return `${brand('Prova Cega de Vinhos')}
+  ${resume}
   <div class="card">
     <label for="code" style="margin-top:0">Código da prova</label>
     <input id="code" data-keep maxlength="4" autocapitalize="characters" autocomplete="off" placeholder="ex.: KTRB" data-enter="goJoin">
-    <button class="btn primary" data-act="goJoin">Entrar</button>
+    <button class="btn ${s ? 'outline' : 'primary'}" data-act="goJoin">Entrar</button>
   </div>`;
 }
 
-
 function joinView() {
-  return `
-  <div class="brand">${LOGO}<h1>Bem-vindo</h1>
-    <p class="lead">Prova <b>${esc(S.joinCode)}</b></p></div>
+  return `${brand('Olá', 'Prova <b>' + esc(S.joinCode) + '</b>')}
   <div class="card">
     <label for="name" style="margin-top:0">O seu nome</label>
     <input id="name" data-keep autocomplete="given-name" maxlength="40" data-enter="join">
@@ -798,8 +919,7 @@ function joinView() {
 }
 
 function createView() {
-  return `
-  <div class="brand">${LOGO}<h1>Nova prova</h1></div>
+  return `${brand('Nova prova')}
   <div class="card">
     <label for="name" style="margin-top:0">O seu nome</label>
     <input id="name" data-keep autocomplete="given-name" maxlength="40" data-enter="create">
@@ -809,16 +929,11 @@ function createView() {
 }
 
 function hostLoginView() {
-  return `
-  <div class="brand">${LOGO}<h1>Recuperar prova</h1></div>
+  return `${brand('Recuperar prova')}
   <div class="card">
     <label for="code" style="margin-top:0">Código da prova</label>
-    <input id="code" data-keep maxlength="4" autocapitalize="characters" autocomplete="off">
-    <label for="pin">PIN</label>
-    <input id="pin" data-keep inputmode="numeric" maxlength="4" autocomplete="off">
-    <label for="name">O seu nome</label>
-    <input id="name" data-keep autocomplete="given-name" maxlength="40" data-enter="hostLogin">
-    <button class="btn green" data-act="hostLogin">Entrar</button>
+    <input id="code" data-keep maxlength="4" autocapitalize="characters" autocomplete="off" placeholder="ex.: KTRB" data-enter="hostLogin">
+    <button class="btn primary" data-act="hostLogin">Entrar</button>
   </div>
   <button class="textbtn" data-act="home">Voltar</button>`;
 }
@@ -841,89 +956,79 @@ function fieldInputs(fields, prefix, values, extra) {
   return html;
 }
 
-/* --- setup: registering bottles --- */
+/* --- setup: everyone registers bottles and sees who and what is in the game --- */
 function ownerPills(list, isOn, act, extra) {
   return `<div class="pills">${list.map(g => `<button class="pill${isOn(g.id) ? ' on' : ''}" aria-pressed="${isOn(g.id)}"
     data-act="${act}" data-gid="${esc(g.id)}"${extra || ''}>${esc(g.name)}</button>`).join('')}</div>`;
 }
 
-function winesCard() {
-  const list = S.isHost ? S.wines : S.wines.filter(w => owns(w, S.guestId));
+function bottleForm() {
+  if (S.wines.length >= MAX_WINES) return `<div class="card"><p class="empty" style="margin:0">Máximo de ${MAX_WINES} garrafas.</p></div>`;
   const others = S.guests.filter(g => g.id !== S.guestId);
-  const full = S.wines.length >= MAX_WINES;
-  const item = w => {
-    const open = S.shareEdit === w.id;
-    return `<div class="wine-item">
-      <b>${esc(w.name)}</b>
-      ${factsLine(w) ? `<span class="sub">${esc(factsLine(w))}</span>` : ''}
-      ${S.isHost || owners(w).length > 1 ? `<span class="sub">de ${esc(broughtBy(w))}</span>` : ''}
-      <div class="acts">
-        ${S.guests.length > 1 ? `<button class="smallbtn" data-act="editOwners" data-id="${esc(w.id)}">${open ? 'Fechar' : 'Pessoas'}</button>` : ''}
-        <button class="smallbtn" data-act="delWine" data-id="${esc(w.id)}">Remover</button></div>
-      ${open ? `<div class="share-box"><b>De quem é?</b>
-        ${ownerPills(S.guests, id => owns(w, id), 'toggleOwner', ` data-id="${esc(w.id)}"`)}
-        <button class="btn outline" data-act="editOwners" data-id="${esc(w.id)}">Feito</button></div>` : ''}
-    </div>`;
-  };
-
   const ownersField = S.isHost
-    ? `<span class="label">De quem é?</span>
-       <div id="newOwners">${ownerPills(S.guests, id => id === S.guestId, 'pill')}</div>`
-    : others.length
-      ? `<span class="label">A meias com</span>
-         <div id="newOwners">${ownerPills(others, () => false, 'pill')}</div>`
-      : '';
-
+    ? `<span class="label">De quem é?</span><div id="newOwners">${ownerPills(S.guests, id => id === S.guestId, 'pill')}</div>`
+    : others.length ? `<span class="label">A meias com</span><div id="newOwners">${ownerPills(others, () => false, 'pill')}</div>` : '';
   return `<div class="card">
-    <h2>${S.isHost ? 'Garrafas (' + S.wines.length + ')' : 'As suas garrafas'}</h2>
-    ${list.length ? list.map(item).join('') : '<p class="empty">Nenhuma garrafa.</p>'}
-    ${full ? `<p class="small">Máximo de ${MAX_WINES} garrafas.</p>` : `<div class="add-form">
-      <label for="wName">Nova garrafa</label>
-      <input id="wName" data-keep maxlength="80" placeholder="Nome do vinho" data-enter="addWine">
-      ${S.showMore
-        ? fieldInputs(DETAIL_FIELDS, 'w_', {}, () => 'data-keep')
-        : '<button class="textbtn" style="margin:4px 0 0" data-act="toggleMore">+ País, região, ano, castas</button>'}
-      ${ownersField}
-      <button class="btn primary" data-act="addWine">Registar</button></div>`}
+    <h2>Nova garrafa</h2>
+    <input id="wName" data-keep maxlength="80" placeholder="Nome do vinho" aria-label="Nome do vinho" data-enter="addWine">
+    ${S.showMore
+      ? fieldInputs(DETAIL_FIELDS, 'w_', {}, () => 'data-keep')
+      : '<button class="textbtn left" data-act="toggleMore">+ País, região, ano, castas</button>'}
+    ${ownersField}
+    <button class="btn primary" data-act="addWine">Registar</button>
   </div>`;
 }
 
+function bottlesCard() {
+  const item = w => {
+    const mine = owns(w, S.guestId), open = S.shareEdit === w.id;
+    return `<div class="wine-item">
+      <b>${esc(w.name)}</b>${mine ? '<span class="mine-tag">sua</span>' : ''}
+      ${factsLine(w) ? `<span class="sub">${esc(factsLine(w))}</span>` : ''}
+      <span class="sub">de ${esc(broughtBy(w))}</span>
+      ${S.isHost || mine ? `<div class="acts">
+        ${S.guests.length > 1 ? `<button class="smallbtn" data-act="editOwners" data-id="${esc(w.id)}">${open ? 'Fechar' : 'Quem trouxe'}</button>` : ''}
+        <button class="smallbtn" data-act="delWine" data-id="${esc(w.id)}">Remover</button></div>` : ''}
+      ${open ? `<div class="share-box">${ownerPills(S.guests, id => owns(w, id), 'toggleOwner', ` data-id="${esc(w.id)}"`)}
+        <button class="btn outline" data-act="editOwners" data-id="${esc(w.id)}">Feito</button></div>` : ''}
+    </div>`;
+  };
+  return `<div class="card"><h2>Garrafas (${S.wines.length})</h2>
+    ${S.wines.length ? S.wines.map(item).join('') : '<p class="empty" style="margin:0">Nenhuma garrafa.</p>'}</div>`;
+}
+
+function peopleCard() {
+  const list = S.isHost
+    ? S.guests.map(g => `<div class="list-row"><b>${esc(g.name)}</b>
+        ${g.id !== S.guestId ? `<button class="smallbtn" data-act="delGuest" data-id="${esc(g.id)}">Remover</button>` : ''}</div>`).join('')
+    : `<div class="names">${S.guests.map(g => `<span class="name${g.id === S.guestId ? ' me' : ''}">${esc(g.name)}</span>`).join('')}</div>`;
+  return `<div class="card"><h2>Pessoas (${S.guests.length})</h2>${list}</div>`;
+}
+
 function setupView(me) {
-  if (!S.isHost) {
-    return `${topBar(me)}
-    ${winesCard()}
-    <div class="waiting">À espera de todos</div>`;
-  }
-  const url = location.origin + location.pathname + '?e=' + S.code;
-  const invite = `<div class="card host center invite">
-        <h2>Entrar na prova</h2>
-        <div id="qr" aria-label="Código QR para entrar"></div>
-        <span class="bigcode">${esc(S.code)}</span>
-        <p class="small">${esc(url.replace(/^https?:\/\//, '').replace(/\/?\?.*$/, ''))} · PIN ${esc(S.event.hostPin)}</p>
-      </div>`;
-  return `${topBar(me)}
-  ${invite}
-  <div class="card">
-    <h2>Pessoas (${S.guests.length})</h2>
-    ${S.guests.map(g => `<div class="list-row"><span><b>${esc(g.name)}</b></span>
-      ${g.id !== S.guestId ? `<button class="smallbtn" data-act="delGuest" data-id="${esc(g.id)}">Remover</button>` : ''}</div>`).join('')}
-  </div>
-  ${winesCard()}
-  <button class="btn green" data-act="closeList" ${S.wines.length < 2 ? 'disabled' : ''}>Já chegaram todos</button>`;
+  const site = (location.host + location.pathname).replace(/\/$/, '');
+  const invite = S.isHost ? `<div class="card center">
+      <h2>Entrar na prova</h2>
+      <div id="qr" aria-label="Código QR para entrar"></div>
+      <span class="bigcode">${esc(S.code)}</span>
+      <p class="small">${esc(site)}</p>
+    </div>` : '';
+  return `${topBar(me)}${invite}${bottleForm()}${bottlesCard()}${peopleCard()}
+  ${S.isHost
+    ? `<button class="btn primary" data-act="closeList" ${S.wines.length < 2 ? 'disabled' : ''}>Já chegaram todos</button>`
+    : '<div class="waiting">À espera de todos</div>'}`;
 }
 
 /* --- prep: bottles are being transferred and numbered by hand --- */
 function prepView(me) {
   const n = S.event.total;
   if (!S.isHost) {
-    return `${topBar(me)}
-    <div class="stage"><div class="bigicon" aria-hidden="true">🍾</div><h1>A preparar as garrafas</h1></div>
+    return `${topBar(me)}${stage('A preparar as garrafas')}
     <div class="waiting">Já vai começar
       <span class="small">Notas de 0 a ${maxScore()} · cada nota no máximo ${perScore()} vezes</span></div>`;
   }
-  return `${topBar(me)}
-  <div class="stage"><div class="bigicon" aria-hidden="true">🍾</div><h1>Preparar as garrafas</h1></div>
-  <div class="card host">
+  return `${topBar(me)}${stage('Preparar as garrafas')}
+  <div class="card">
     <ol class="steps">
       <li>Passe cada vinho para uma garrafa igual.</li>
       <li>Tape o nome.</li>
@@ -937,8 +1042,8 @@ function prepView(me) {
 /* --- tasting: free voting, any wine, any order --- */
 function hostTastingPanel() {
   const miss = missingVotes();
-  return `<div class="card host">
-    <h2>${miss.length ? 'Falta votar' : 'Todos votaram ✓'}</h2>
+  return `<div class="card">
+    <h2>${miss.length ? 'Falta votar' : 'Todos votaram'}</h2>
     ${miss.map(m => `<div class="list-row"><span><b>${esc(m.g.name)}</b>
       <span class="sub">${m.miss.length === 1 ? 'vinho ' : 'vinhos '}${listPt(m.miss.map(String))}</span></span>
       ${m.g.id !== S.guestId ? `<button class="smallbtn" data-act="markLeft" data-id="${esc(m.g.id)}">Já saiu</button>` : ''}</div>`).join('')}
@@ -954,20 +1059,21 @@ function guessCard(n) {
   }
   return `<div class="card">
     <h2>Palpite · vinho ${n}</h2>
+    <datalist id="dl-wines">${S.wines.map(w => `<option>${esc(w.name)}</option>`).join('')}</datalist>
     <div data-guess-for="${n}">${fieldInputs(FIELDS, 'g_', g, () => 'data-guess')}</div>
     <button class="btn outline" data-act="toggleGuess">Fechar</button>
   </div>`;
 }
 
 function tastingView(me) {
-  const e = S.event, total = e.total;
+  const total = S.event.total;
   if (!S.sel || S.sel > total) S.sel = firstUnscored();
   const n = S.sel;
   const mine = myScores();
   const my = mine[n];
   const per = perScore();
   const usedElsewhere = s => Object.keys(mine).filter(k => +k !== n && mine[k] === s).length;
-  const done = Object.keys(mine).filter(k => k <= total && mine[k] != null).length;
+  const done = Object.keys(mine).filter(k => +k <= total && mine[k] != null).length;
 
   let grid = '';
   for (let s = 0; s <= maxScore(); s++) {
@@ -1024,14 +1130,12 @@ function revealView(me) {
     </div></div>`;
   }
   const left = bottlesWithoutMajority();
-  return `${topBar(me)}
-  <div class="stage"><div class="bigicon" aria-hidden="true">🎁</div><h1>A revelação</h1>
-    <p class="lead">Que vinho estava em cada garrafa?</p></div>
+  return `${topBar(me)}${stage('A revelação', 'Que vinho estava em cada garrafa?')}
   <div class="card">${rows}</div>
-  ${S.isHost ? `<div class="card host">
+  ${S.isHost ? `<div class="card">
       <button class="btn primary" style="margin-top:0" data-act="showResults" ${left.length ? 'disabled' : ''}>Mostrar resultados</button>
       <button class="textbtn" data-act="backToTasting">Voltar à prova</button></div>`
-    : DEMO ? `<div class="card host">
+    : DEMO ? `<div class="card">
         <button class="btn primary" style="margin-top:0" data-act="showResults" ${left.length ? 'disabled' : ''}>Ver resultados</button></div>`
     : '<div class="waiting">Os resultados vêm já</div>'}`;
 }
@@ -1059,17 +1163,7 @@ function guessScore(gid) {
   return { right, tried };
 }
 
-function myGuessLines(w) {
-  const g = (S.guesses[S.guestId] || {})[w.number] || {};
-  const lines = FIELDS.map(f => {
-    const j = judge(f.k, g[f.k], w);
-    if (!j) return '';
-    return `<div class="nrow"><span>${f.label}: ${esc(g[f.k])}</span><span class="${j.ok ? 'ok' : 'bad'}">${j.ok ? '✓' : '✗'}${j.note ? ' ' + j.note : ''}</span></div>`;
-  }).join('');
-  return lines ? `<p class="small" style="margin-top:8px"><b>O seu palpite</b></p>${lines}` : '';
-}
-
-/* Fun numbers for the end of the night. Each entry: icon, title, main line, detail. */
+/* Numbers for the end of the night: [title, main line, detail]. */
 function nightStats(rows) {
   const out = [];
   const numbered = rows.filter(r => r.count);
@@ -1082,8 +1176,8 @@ function nightStats(rows) {
   if (people.length >= 2) {
     const hi = Math.max(...people.map(p => p.avg)), lo = Math.min(...people.map(p => p.avg));
     if (hi - lo > 1e-9) {
-      out.push(['😊', 'Mais generoso', namesOf(people.filter(p => Math.abs(p.avg - hi) < 1e-9)), 'média ' + fmt(hi)]);
-      out.push(['🧐', 'Mais exigente', namesOf(people.filter(p => Math.abs(p.avg - lo) < 1e-9)), 'média ' + fmt(lo)]);
+      out.push(['Mais generoso', namesOf(people.filter(p => Math.abs(p.avg - hi) < 1e-9)), 'média ' + fmt(hi)]);
+      out.push(['Mais exigente', namesOf(people.filter(p => Math.abs(p.avg - lo) < 1e-9)), 'média ' + fmt(lo)]);
     }
     // Two people whose scores differ the least, over the wines both scored
     let best = null;
@@ -1093,7 +1187,7 @@ function nightStats(rows) {
       const diff = common.reduce((a, r) => a + Math.abs(people[i].sc[r.number] - people[j].sc[r.number]), 0) / common.length;
       if (!best || diff < best.diff) best = { diff, a: people[i], b: people[j] };
     }
-    if (best) out.push(['👯', 'Gostos parecidos', esc(best.a.g.name) + ' e ' + esc(best.b.g.name), 'diferença média de ' + fmt(best.diff).replace(/,00$/, '')]);
+    if (best) out.push(['Gostos parecidos', esc(best.a.g.name) + ' e ' + esc(best.b.g.name), 'diferença média de ' + fmt(best.diff).replace(/,00$/, '')]);
   }
 
   const spread = numbered.filter(r => r.count >= 2);
@@ -1101,8 +1195,8 @@ function nightStats(rows) {
     const calm = spread.slice().sort((a, b) => (a.max - a.min) - (b.max - b.min) || b.avg - a.avg)[0];
     const wild = spread.slice().sort((a, b) => (b.max - b.min) - (a.max - a.min) || b.avg - a.avg)[0];
     if (calm !== wild && wild.max - wild.min > calm.max - calm.min) {
-      out.push(['🤝', 'Mais consensual', esc(calm.name), calm.min === calm.max ? 'todos deram ' + calm.min : 'notas de ' + calm.min + ' a ' + calm.max]);
-      out.push(['⚡', 'Mais polémico', esc(wild.name), 'notas de ' + wild.min + ' a ' + wild.max]);
+      out.push(['Mais consensual', esc(calm.name), calm.min === calm.max ? 'todos deram ' + calm.min : 'notas de ' + calm.min + ' a ' + calm.max]);
+      out.push(['Mais polémico', esc(wild.name), 'notas de ' + wild.min + ' a ' + wild.max]);
     }
   }
 
@@ -1112,8 +1206,8 @@ function nightStats(rows) {
     all.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
     const top = Math.max(...Object.values(freq));
     const common = Object.keys(freq).filter(v => freq[v] === top).map(Number).sort((a, b) => b - a);
-    out.push(['🔢', 'Nota mais dada', listPt(common.map(String)), plural(top, 'vez', 'vezes')]);
-    out.push(['🍷', 'Pontos da noite', String(all.reduce((a, b) => a + b, 0)), plural(all.length, 'nota', 'notas')]);
+    out.push(['Nota mais dada', listPt(common.map(String)), plural(top, 'vez', 'vezes')]);
+    out.push(['Pontos da noite', String(all.reduce((a, b) => a + b, 0)), plural(all.length, 'nota', 'notas')]);
   }
 
   // Blind, but did anyone fall for their own bottle?
@@ -1122,61 +1216,125 @@ function nightStats(rows) {
     const v = (S.ratings[gid] || {})[r.number];
     if (typeof v === 'number' && (!self || v > self.v)) self = { v, gid, r };
   }));
-  if (self && self.v >= 7) out.push(['❤️', 'Gostou do próprio vinho', esc(guestName(self.gid)), 'deu ' + self.v + ' ao seu ' + esc(self.r.name)]);
+  if (self && self.v >= 7) out.push(['Gostou do próprio vinho', esc(guestName(self.gid)), 'deu ' + self.v + ' ao seu ' + esc(self.r.name)]);
   return out;
+}
+
+// Short column names for the grades table: first names, plus an initial when two people share one.
+function shortNames(list) {
+  const count = {};
+  list.forEach(g => { const f = norm(firstName(g.name)); count[f] = (count[f] || 0) + 1; });
+  const out = {};
+  list.forEach(g => {
+    const parts = String(g.name || '').trim().split(/\s+/);
+    out[g.id] = count[norm(parts[0])] > 1 && parts[1] ? parts[0] + ' ' + parts[1][0] + '.' : parts[0];
+  });
+  return out;
+}
+
+function gradesFor(r) {
+  return S.guests.map(g => ({ g, v: (S.ratings[g.id] || {})[r.number] })).filter(x => typeof x.v === 'number')
+    .sort((a, b) => b.v - a.v)
+    .map(x => `<div class="nrow"><span>${esc(x.g.name)}${owns(r, x.g.id) ? ' <span class="small">(trouxe)</span>' : ''}</span><b>${x.v}</b></div>`).join('');
+}
+
+function rankTab(rows) {
+  const mine = myScores();
+  const stats = nightStats(rows);
+  return `<div class="card">
+    ${rows.map(r => `<details class="rank"><summary>
+      <span class="rk${r.rank && r.rank <= 3 ? ' r' + r.rank : ''}">${r.rank || '–'}</span>
+      <div class="info"><b>${esc(r.name)}</b>${owns(r, S.guestId) ? '<span class="mine-tag">seu</span>' : ''}
+        <span class="sub">de ${esc(broughtBy(r))} · garrafa ${r.number}</span>
+        <span class="sub">${r.total} pontos · ${plural(r.count, 'nota', 'notas')}${mine[r.number] != null ? ` · <span class="nw">a sua: <b>${mine[r.number]}</b></span>` : ''}</span></div>
+      <div class="av">${fmt(r.avg)}<span class="avl">média</span></div></summary>
+      <div class="more">
+        ${factsLine(r) ? `<div class="facts">${esc(factsLine(r))}</div>` : ''}
+        ${gradesFor(r)}
+      </div>
+    </details>`).join('')}
+  </div>
+  ${stats.length ? `<div class="card"><h2>Estatísticas</h2><div class="stats">
+    ${stats.map(([title, main, detail]) => `<div class="stat"><span class="st">${title}</span><b>${main}</b><span class="sd">${detail}</span></div>`).join('')}
+  </div></div>` : ''}`;
+}
+
+/* Every grade, organised: one row per wine (in ranking order), one column per person. */
+function gradesTab(rows) {
+  const people = S.guests.filter(g => rows.some(r => typeof (S.ratings[g.id] || {})[r.number] === 'number'));
+  const short = shortNames(people);
+  const cell = v => `<td class="v"><span class="pip ${typeof v !== 'number' ? 'none' : v >= 9 ? 'v3' : v >= 7 ? 'v2' : v >= 4 ? 'v1' : 'v0'}">${typeof v === 'number' ? v : '–'}</span></td>`;
+  const given = g => {
+    const vals = rows.map(r => (S.ratings[g.id] || {})[r.number]).filter(v => typeof v === 'number');
+    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+  };
+  return `<div class="card"><div class="matrix-wrap"><table class="matrix">
+    <thead><tr><th class="wcol"></th>${people.map(g => `<th class="${g.id === S.guestId ? 'me' : ''}" title="${esc(g.name)}">${esc(short[g.id])}</th>`).join('')}<th class="acol">Média</th></tr></thead>
+    <tbody>${rows.map(r => `<tr><th class="wcol">${esc(r.name)}<span class="wo">de ${esc(listPt(owners(r).map(id => firstName(guestName(id)))))}</span></th>
+      ${people.map(g => cell((S.ratings[g.id] || {})[r.number])).join('')}<td class="acol">${fmt(r.avg)}</td></tr>`).join('')}</tbody>
+    <tfoot><tr><th class="wcol">Média dada</th>${people.map(g => `<td>${fmt(given(g))}</td>`).join('')}<td class="acol"></td></tr></tfoot>
+  </table></div></div>`;
+}
+
+/* Everyone's guesses, wine by wine: right answers in green, wrong ones crossed out. */
+function guessesTab(rows, guessers) {
+  const order = ['name', 'country', 'region', 'year', 'abv', 'grapes'];
+  const shown = (k, v) => k === 'abv' ? abvText(v) : k === 'name' ? '“' + v + '”' : v;
+  const line = (g, w) => {
+    const gs = (S.guesses[g.id] || {})[w.number] || {};
+    const parts = order.filter(k => gs[k] && String(gs[k]).trim()).map(k => {
+      const j = judge(k, gs[k], w);
+      return !j ? `<span>${esc(shown(k, gs[k]))}</span>`
+        : `<span class="${j.ok ? 'hit' : 'miss'}">${esc(shown(k, gs[k]))}${j.ok ? ' ✓' : ''}</span>`;
+    });
+    return parts.length ? `<div class="gp"><span class="gn">${esc(g.name)}</span><span class="gv">${parts.join(' · ')}</span></div>` : '';
+  };
+  const wines = rows.slice().sort((a, b) => a.number - b.number).map(w => {
+    const lines = S.guests.map(g => line(g, w)).join('');
+    return lines ? `<div class="gwine">
+      <div class="gw-head"><span class="tag-num sm">${w.number}</span><div><b>${esc(w.name)}</b>
+        ${factsLine(w) ? `<span class="sub">${esc(factsLine(w))}</span>` : ''}</div></div>
+      ${lines}</div>` : '';
+  }).join('');
+  return `<div class="card"><h2>Acertos</h2>
+    ${guessers.map(x => `<div class="nrow"><span>${esc(x.g.name)}</span><b>${x.right} de ${x.tried}</b></div>`).join('')}</div>
+  <div class="card">${wines}</div>`;
 }
 
 function resultsView(me) {
   const rows = computeResults();
   const winners = rows.filter(r => r.rank === 1);
-  const medal = r => ({ 1: '🥇', 2: '🥈', 3: '🥉' }[r.rank] || '');
-  const mine = myScores();
   const guessers = S.guests.map(g => Object.assign({ g }, guessScore(g.id))).filter(x => x.tried).sort((a, b) => b.right - a.right);
-  const stats = nightStats(rows);
+  const tabs = [['rank', 'Classificação'], ['grades', 'Notas']].concat(guessers.length ? [['guesses', 'Palpites']] : []);
+  if (!tabs.some(t => t[0] === S.resTab)) S.resTab = 'rank';
+  const body = S.resTab === 'grades' ? gradesTab(rows) : S.resTab === 'guesses' ? guessesTab(rows, guessers) : rankTab(rows);
 
   return `${topBar(me)}
   <h1 class="center">Resultados</h1>
-  ${winners.length > 1 ? '<p class="center lead">Empate!</p>' : ''}
+  ${winners.length > 1 ? '<p class="center eyebrow">Empate</p>' : ''}
   ${winners.map(w => `<div class="winner reveal">
-    <div class="medal" aria-hidden="true">🏆</div>
+    <div class="eyebrow">Vencedor</div>
     <div class="wname">${esc(w.name)}</div>
     <div class="soft">de ${esc(broughtBy(w))}</div>
     <div class="avg">${fmt(w.avg)}</div>
-    <div class="soft">média</div>
+    <div class="soft">média · ${w.total} pontos</div>
   </div>`).join('')}
-  <div class="card">
-    <h2>Classificação</h2>
-    ${rows.map(r => `<details class="rank"><summary>
-      <div class="rk${medal(r) ? ' medal' : ''}">${medal(r) || (r.rank || '–')}</div>
-      <div class="info"><b>${esc(r.name)}</b>${owns(r, S.guestId) ? '<span class="mine-tag">seu</span>' : ''}
-        <span class="sub">de ${esc(broughtBy(r))} · garrafa ${r.number}</span>
-        <span class="sub">${r.total} pontos · ${plural(r.count, 'nota', 'notas')}${mine[r.number] != null ? ` · a sua: <b>${mine[r.number]}</b>` : ''}</span></div>
-      <div class="av">${fmt(r.avg)}<span class="avl">média</span></div></summary>
-      <div class="more">
-        ${factsLine(r) ? `<div class="facts">${esc(factsLine(r))}</div>` : ''}
-        ${S.guests.map(g => { const v = (S.ratings[g.id] || {})[r.number];
-          return v == null ? '' : `<div class="nrow"><span>${esc(g.name)}</span><b>${v}</b></div>`; }).join('')}
-        ${myGuessLines(r)}
-      </div>
-    </details>`).join('')}
-  </div>
-  ${stats.length ? `<div class="card"><h2>Estatísticas</h2><div class="stats">
-    ${stats.map(([icon, title, main, detail]) => `<div class="stat"><span class="ic" aria-hidden="true">${icon}</span>
-      <span class="st">${title}</span><b>${main}</b><span class="sd">${detail}</span></div>`).join('')}</div></div>` : ''}
-  ${guessers.length ? `<div class="card"><h2>Palpites</h2>
-    ${guessers.map(x => `<div class="nrow"><span>${esc(x.g.name)}</span><b>${x.right} de ${x.tried}</b></div>`).join('')}</div>` : ''}
+  <div class="tabs" role="tablist">${tabs.map(([k, l]) => `<button class="tab${S.resTab === k ? ' on' : ''}" role="tab"
+    aria-selected="${S.resTab === k}" data-act="tab" data-t="${k}">${l}</button>`).join('')}</div>
+  ${body}
   ${S.isHost ? `<button class="textbtn" data-act="reopen">Corrigir a revelação</button>
     <button class="textbtn" data-act="newTasting">Nova prova</button>`
     : DEMO ? '<button class="btn outline" data-act="leave">Experimentar outra vez</button>' : ''}`;
 }
 
 function view() {
-  const ribbon = DEMO ? '<div class="ribbon">Demonstração · experimente avaliar os vinhos</div>' : '';
-  return ribbon + screen();
+  return (DEMO ? '<div class="ribbon">Demonstração · experimente avaliar os vinhos</div>' : '') +
+    (S.offline && !DEMO ? '<div class="offline">Sem ligação à internet</div>' : '') + screen();
 }
 
 function screen() {
-  if (!fs) return '<p class="center lead" style="margin-top:40vh">Sem ligação. Verifique a internet.</p>';
+  if (!fs) return `<div class="center" style="margin-top:30vh"><p class="lead">Sem ligação à internet.</p>
+    <button class="btn primary" data-act="reload">Tentar outra vez</button></div>`;
   if (!S.code) {
     if (DEMO) return '<p class="center lead" style="margin-top:40vh">A carregar…</p>';
     if (S.view === 'join') return joinView();
@@ -1228,26 +1386,36 @@ function render(force) {
   const key = S.code ? 'ev:' + S.code + ':' + (S.event ? S.event.phase : '') : 'v:' + S.view;
   const draft = key === S.lastKey && !S.clearDraft ? captureDraft() : null;
   S.lastKey = key; S.clearDraft = false;
-  $app.innerHTML = view();
+  let html;
+  try { html = view(); } catch (err) {
+    // Unexpected data must never leave a blank screen.
+    console.error(err);
+    html = `<div class="center" style="margin-top:30vh"><p class="lead">Algo correu mal.</p>
+      <button class="btn primary" data-act="reload">Recarregar</button></div>`;
+  }
+  $app.innerHTML = html;
   if (draft) restoreDraft(draft);
   const qr = document.getElementById('qr');
   if (qr && window.QRCode) {
-    new QRCode(qr, { text: location.origin + location.pathname + '?e=' + S.code, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+    try { new QRCode(qr, { text: location.origin + location.pathname + '?e=' + S.code, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M }); } catch (e) {}
   }
   syncWakeLock();
 }
 
-let busy = false;
+// One action at a time (no double taps); a stuck action never blocks the buttons for more than 15 s.
+let busy = false, actionSeq = 0;
 $app.addEventListener('click', e => {
   const b = e.target.closest('[data-act]');
   if (!b || b.disabled || busy) return;
   const fn = A[b.dataset.act];
   if (!fn) return;
+  const seq = ++actionSeq;
   busy = true;
+  const release = setTimeout(() => { if (actionSeq === seq) busy = false; }, 15000);
   Promise.resolve().then(() => fn(b.dataset, b)).catch(err => {
     console.error(err);
-    toast('Não funcionou. Verifique a internet.');
-  }).finally(() => { busy = false; });
+    toast(err && err.message === 'timeout' ? 'Sem ligação. Tente outra vez.' : 'Não funcionou. Verifique a internet.');
+  }).finally(() => { clearTimeout(release); if (actionSeq === seq) busy = false; });
 });
 $app.addEventListener('keydown', e => {
   if (e.key !== 'Enter' || !e.target.dataset || !e.target.dataset.enter) return;
@@ -1257,16 +1425,17 @@ $app.addEventListener('keydown', e => {
 });
 $app.addEventListener('change', e => {
   const t = e.target;
-  const fail = err => { console.error(err); toast('Não foi possível guardar. Verifique a internet.'); };
   if (t.dataset && t.dataset.reveal) {
-    saveRevealVote(parseInt(t.dataset.reveal, 10), t.value || null).then(() => render(true)).catch(fail);
+    saveRevealVote(parseInt(t.dataset.reveal, 10), t.value || null);
+    render(true);
   } else if (t.hasAttribute('data-guess')) {
     const box = t.closest('[data-guess-for]');
-    if (box) saveGuess(parseInt(box.dataset.guessFor, 10)).catch(fail);
+    if (box) saveGuess(parseInt(box.dataset.guessFor, 10));
   }
 });
+window.addEventListener('unhandledrejection', e => console.error(e.reason));
 
-/* ---------- demo: everything lives in this phone's memory, with three virtual guests ---------- */
+/* ---------- demo: everything lives in this phone's memory, with virtual guests ---------- */
 function memoryDb(onChange) {
   const store = new Map(), listeners = new Set();
   const clone = o => o == null ? null : JSON.parse(JSON.stringify(o));
@@ -1349,7 +1518,7 @@ const Demo = {
     names.forEach(n => { ids[n] = ev.collection('guests').doc().id; });
     const total = Demo.wines.length;
     let t = Date.now();
-    await ev.set({ createdAt: t, hostPin: '', hostGuest: ids[Demo.host], phase: 'tasting', current: 0, total, maxScore: MAX_SCORE, perScore: PER_SCORE });
+    await ev.set({ createdAt: t, hostPin: '', hostGuest: ids[Demo.host], phase: 'tasting', total, maxScore: MAX_SCORE, perScore: PER_SCORE });
     for (const n of names) await ev.collection('guests').doc(ids[n]).set({ name: n, joinedAt: t++ });
     // The bottles were shuffled and numbered by hand; only the virtual people know which is which.
     const order = shuffle(Demo.wines.map((w, i) => i));
@@ -1368,12 +1537,14 @@ const Demo = {
   ballot(total) {
     const pool = shuffle([3, 4, 5, 6, 7, 8, 9, 10].flatMap(x => [x, x])).concat(shuffle([0, 1, 2, 0, 1, 2]));
     const pick = (real, list, p) => Math.random() < p ? real : list[Math.floor(Math.random() * list.length)];
+    const names = Demo.wines.map(w => w.name);
     const scores = {}, guesses = {};
     for (let k = 1; k <= total; k++) {
       const w = Demo.bottles[k];
       scores[k] = pool[k - 1];
       guesses[k] = {
-        name: '', country: pick(w.country, ['Portugal', 'Espanha', 'França'], 0.8),
+        name: Math.random() < 0.5 ? pick(w.name, names, 0.5) : '',
+        country: pick(w.country, ['Portugal', 'Espanha', 'França'], 0.8),
         region: pick(w.region, ['Douro', 'Alentejo', 'Dão', 'Bairrada', 'Lisboa'], 0.4),
         year: String(parseInt(w.year, 10) + (Math.random() < 0.4 ? 0 : 1)),
         abv: pick(w.abv, ['12,5', '13', '14'], 0.5), grapes: pick(w.grapes, ['Touriga Nacional', 'Baga', 'Castelão', 'Aragonez'], 0.5)
@@ -1390,7 +1561,7 @@ const Demo = {
       const mine = myScores();
       for (let k = 1; k <= e.total; k++) if (mine[k] == null) return;
       Demo.finished = true;
-      toast('Votou em todos! A prova vai terminar.', 'ok');
+      toast('Votou em todos. A prova vai terminar.', 'ok');
       setTimeout(() => fs.collection('events').doc('DEMO').update({ phase: 'reveal' }), 3500);
     }
     if (e.phase === 'reveal' && !Demo.revealed) {
@@ -1410,10 +1581,14 @@ const Demo = {
 
 /* ---------- start ---------- */
 /* Phones and GitHub keep old copies of this page for a while. version.txt is always fetched fresh; if it names
-   a newer version than this page, reload once with ?v=<version>, an address no cache has seen yet. */
+   a newer version than this page, reload once with ?v=<version>, an address no cache has seen yet.
+   On a slow connection the check gives up after a few seconds rather than delaying the app. */
 async function isOutdated() {
   try {
-    const r = await fetch('version.txt?t=' + Date.now(), { cache: 'no-store' });
+    const ctl = 'AbortController' in window ? new AbortController() : null;
+    const t = setTimeout(() => ctl && ctl.abort(), 4000);
+    const r = await fetch('version.txt?t=' + Date.now(), { cache: 'no-store', signal: ctl ? ctl.signal : undefined });
+    clearTimeout(t);
     if (!r.ok) return false;
     const latest = (await r.text()).trim();
     if (!latest || latest === APP_VERSION || PARAMS.get('v') === latest) return false;
@@ -1425,26 +1600,23 @@ async function isOutdated() {
 
 (async function init() {
   if (await isOutdated()) return;
-  if (DEMO) { await Demo.start(); return; }
+  if (DEMO) { try { await Demo.start(); } catch (e) { console.error(e); render(true); } return; }
   if (!window.firebase) { render(true); return; }
   firebase.initializeApp(firebaseConfig);
   fs = firebase.firestore();
   // Some routers, mobile networks and antivirus proxies hold back Firestore's streaming connection,
   // so live updates never arrive. Long polling works everywhere and is plenty fast for a dinner table.
-  // Each poll is answered within 10 s (default 30 s), so a network that holds replies back delays updates by at most ~10 s.
   fs.settings({ experimentalForceLongPolling: true, experimentalAutoDetectLongPolling: false, experimentalLongPollingOptions: { timeoutSeconds: 10 }, merge: true });
 
   // Only the host link (?anfitriao=<secret>) can create tastings. The plain link only joins one with a code.
   const key = PARAMS.get('anfitriao');
   try { if (key && await sha256(key) === HOST_HASH) { S.hostKey = key; S.canCreate = true; } } catch (e) {}
 
-  // Reopen this phone's tasting only when the address names it (a reload, or the QR code again).
-  // The plain link always starts on the home screen.
+  // The QR code or a reload names the tasting: go straight back in if this phone was already in it.
   const urlCode = (PARAMS.get('e') || '').toUpperCase().replace(/[^A-Z]/g, '');
   const saved = loadSession();
-  if (urlCode.length === 4 && saved && saved.code === urlCode && saved.guestId) {
-    S.code = saved.code; S.guestId = saved.guestId; S.hostPin = saved.hostPin || null;
-    setUrl(S.code); subscribe(); render(true);
+  if (urlCode.length === 4 && saved && saved.code === urlCode) {
+    enterEvent(saved.code, saved.guestId, saved.hostPin);
   } else if (urlCode.length === 4) {
     S.joinCode = urlCode; S.view = 'join'; setUrl(urlCode); render(true);
   } else {
