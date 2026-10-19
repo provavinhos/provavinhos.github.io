@@ -205,6 +205,10 @@
   .pip.v2 { background: #c26d80; color: #fff; }
   .pip.v3 { background: var(--claret); color: #fff; }
   .pip.none { color: #bfb3ad; }
+  .pip.own { box-shadow: inset 0 0 0 3px #d4a93c; }
+  .legend { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; font-size: .85rem; color: var(--muted); }
+  .pip.sw { width: 20px; height: 20px; border-radius: 6px; }
+  .pip.sw.own { box-shadow: inset 0 0 0 2px #d4a93c; }
   .matrix .acol { font-weight: 700; color: var(--claret-deep); padding: 0 4px 0 8px; white-space: nowrap; }
   .matrix tfoot th, .matrix tfoot td { font-size: .78rem; color: var(--muted); font-weight: 700; padding-top: 6px; white-space: nowrap; }
 
@@ -296,7 +300,7 @@ const PER_SCORE = 2;    // each score can be given at most twice
 const MAX_WINES = 20;   // 11 scores x 2 = 22, enough for 20 bottles
 
 /* Bump APP_VERSION and write the same text in version.txt on every change, so phones pick up the new page. */
-const APP_VERSION = '2026-10-19.1';
+const APP_VERSION = '2026-10-19.2';
 
 /* Only phones that opened the host link (?anfitriao=...) can create tastings.
    This is the SHA-256 of that secret, so the secret itself is not in the page. */
@@ -1263,7 +1267,9 @@ function rankTab(rows) {
 function gradesTab(rows) {
   const people = S.guests.filter(g => rows.some(r => typeof (S.ratings[g.id] || {})[r.number] === 'number'));
   const short = shortNames(people);
-  const cell = v => `<td class="v"><span class="pip ${typeof v !== 'number' ? 'none' : v >= 9 ? 'v3' : v >= 7 ? 'v2' : v >= 4 ? 'v1' : 'v0'}">${typeof v === 'number' ? v : '–'}</span></td>`;
+  // A gold ring marks the grade each person gave to the wine they brought.
+  const cell = (v, own) => `<td class="v"><span class="pip ${typeof v !== 'number' ? 'none' : v >= 9 ? 'v3' : v >= 7 ? 'v2' : v >= 4 ? 'v1' : 'v0'}${own ? ' own' : ''}"${own ? ' title="Vinho que trouxe"' : ''}>${typeof v === 'number' ? v : '–'}</span></td>`;
+  const anyOwn = rows.some(r => people.some(g => owns(r, g.id) && typeof (S.ratings[g.id] || {})[r.number] === 'number'));
   const given = g => {
     const vals = rows.map(r => (S.ratings[g.id] || {})[r.number]).filter(v => typeof v === 'number');
     return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
@@ -1271,9 +1277,10 @@ function gradesTab(rows) {
   return `<div class="card"><div class="matrix-wrap"><table class="matrix">
     <thead><tr><th class="wcol"></th>${people.map(g => `<th class="${g.id === S.guestId ? 'me' : ''}" title="${esc(g.name)}">${esc(short[g.id])}</th>`).join('')}<th class="acol">Média</th></tr></thead>
     <tbody>${rows.map(r => `<tr><th class="wcol">${esc(r.name)}<span class="wo">de ${esc(listPt(owners(r).map(id => firstName(guestName(id)))))}</span></th>
-      ${people.map(g => cell((S.ratings[g.id] || {})[r.number])).join('')}<td class="acol">${fmt(r.avg)}</td></tr>`).join('')}</tbody>
+      ${people.map(g => cell((S.ratings[g.id] || {})[r.number], owns(r, g.id))).join('')}<td class="acol">${fmt(r.avg)}</td></tr>`).join('')}</tbody>
     <tfoot><tr><th class="wcol">Média dada</th>${people.map(g => `<td>${fmt(given(g))}</td>`).join('')}<td class="acol"></td></tr></tfoot>
-  </table></div></div>`;
+  </table></div>
+  ${anyOwn ? '<p class="legend"><span class="pip v1 own sw"></span>Vinho que a pessoa trouxe</p>' : ''}</div>`;
 }
 
 /* Everyone's guesses, wine by wine: right answers in green, wrong ones crossed out. */
