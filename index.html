@@ -189,16 +189,23 @@
   .stat b { font-family: "Fraunces", Georgia, serif; font-size: 1.1rem; line-height: 1.2; margin-top: 3px; overflow-wrap: anywhere; color: var(--claret-deep); }
   .stat .sd { font-size: .8rem; color: var(--muted); margin-top: 2px; }
 
-  /* All the grades: wines down, people across; the wine column stays put while scrolling sideways */
-  .matrix-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -6px; padding: 0 6px 4px; }
-  table.matrix { border-collapse: separate; border-spacing: 4px; font-size: .95rem; }
-  .matrix th, .matrix td { text-align: center; }
-  .matrix thead th { font-size: .78rem; color: var(--muted); font-weight: 700; padding: 0 2px 4px; white-space: nowrap; }
-  .matrix thead th.me { color: var(--claret); }
-  .matrix .wcol { position: sticky; left: 0; z-index: 1; background: var(--paper); text-align: left; min-width: 112px; max-width: 132px; padding: 4px 8px 4px 0; font-weight: 700; font-size: .88rem; line-height: 1.2; }
-  .matrix .wcol .wo { display: block; font-weight: 400; font-size: .75rem; color: var(--muted); }
-  .matrix td { vertical-align: middle; }
-  .matrix td.v { padding: 0; }
+  /* All the grades: wines down, people across. Names on the left never move; the grades scroll beside them. */
+  .gt { display: flex; align-items: flex-start; }
+  .gt-left { flex: none; width: 112px; padding-right: 8px; }
+  .gt-right { flex: 1; min-width: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .gt-head { height: 30px; }
+  .gt-row { height: 64px; }
+  .gt-foot { height: 36px; }
+  .gt-name { display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+  .gt-name .wn { font-weight: 700; font-size: .88rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .gt-name .wo { font-size: .75rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gt-left .gt-foot { display: flex; align-items: center; font-size: .78rem; font-weight: 700; color: var(--muted); }
+  table.gt-table { border-collapse: collapse; }
+  .gt-table th, .gt-table td { padding: 0 3px; text-align: center; vertical-align: middle; }
+  .gt-table thead th { font-size: .78rem; color: var(--muted); font-weight: 700; white-space: nowrap; }
+  .gt-table thead th.me { color: var(--claret); }
+  .gt-table tfoot td { font-size: .78rem; color: var(--muted); font-weight: 700; white-space: nowrap; }
+  .gt-table .acol { font-weight: 700; color: var(--claret-deep); padding: 0 4px 0 8px; white-space: nowrap; }
   .pip { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; font-weight: 700; }
   .pip.v0 { background: #f3eded; }
   .pip.v1 { background: #ead2d5; }
@@ -209,8 +216,6 @@
   .legend { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; font-size: .85rem; color: var(--muted); }
   .pip.sw { width: 20px; height: 20px; border-radius: 6px; }
   .pip.sw.own { box-shadow: inset 0 0 0 2px #d4a93c; }
-  .matrix .acol { font-weight: 700; color: var(--claret-deep); padding: 0 4px 0 8px; white-space: nowrap; }
-  .matrix tfoot th, .matrix tfoot td { font-size: .78rem; color: var(--muted); font-weight: 700; padding-top: 6px; white-space: nowrap; }
 
   .gwine { padding: 12px 0; border-bottom: 1px solid var(--line); }
   .gwine:last-child { border-bottom: none; }
@@ -300,7 +305,7 @@ const PER_SCORE = 2;    // each score can be given at most twice
 const MAX_WINES = 20;   // 11 scores x 2 = 22, enough for 20 bottles
 
 /* Bump APP_VERSION and write the same text in version.txt on every change, so phones pick up the new page. */
-const APP_VERSION = '2026-10-19.2';
+const APP_VERSION = '2026-10-19.3';
 
 /* Only phones that opened the host link (?anfitriao=...) can create tastings.
    This is the SHA-256 of that secret, so the secret itself is not in the page. */
@@ -1274,12 +1279,21 @@ function gradesTab(rows) {
     const vals = rows.map(r => (S.ratings[g.id] || {})[r.number]).filter(v => typeof v === 'number');
     return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
   };
-  return `<div class="card"><div class="matrix-wrap"><table class="matrix">
-    <thead><tr><th class="wcol"></th>${people.map(g => `<th class="${g.id === S.guestId ? 'me' : ''}" title="${esc(g.name)}">${esc(short[g.id])}</th>`).join('')}<th class="acol">Média</th></tr></thead>
-    <tbody>${rows.map(r => `<tr><th class="wcol">${esc(r.name)}<span class="wo">de ${esc(listPt(owners(r).map(id => firstName(guestName(id)))))}</span></th>
-      ${people.map(g => cell((S.ratings[g.id] || {})[r.number], owns(r, g.id))).join('')}<td class="acol">${fmt(r.avg)}</td></tr>`).join('')}</tbody>
-    <tfoot><tr><th class="wcol">Média dada</th>${people.map(g => `<td>${fmt(given(g))}</td>`).join('')}<td class="acol"></td></tr></tfoot>
-  </table></div>
+  // Two side-by-side blocks with identical fixed row heights: the wine names stay still and only the grades
+  // scroll sideways. No "sticky" cells, so nothing can slide over or under anything else while scrolling.
+  return `<div class="card"><div class="gt">
+    <div class="gt-left">
+      <div class="gt-head"></div>
+      ${rows.map(r => `<div class="gt-row gt-name"><span class="wn">${esc(r.name)}</span>
+        <span class="wo">de ${esc(listPt(owners(r).map(id => firstName(guestName(id)))))}</span></div>`).join('')}
+      <div class="gt-foot">Média dada</div>
+    </div>
+    <div class="gt-right"><table class="gt-table">
+      <thead><tr class="gt-head">${people.map(g => `<th class="${g.id === S.guestId ? 'me' : ''}" title="${esc(g.name)}">${esc(short[g.id])}</th>`).join('')}<th class="acol">Média</th></tr></thead>
+      <tbody>${rows.map(r => `<tr class="gt-row">${people.map(g => cell((S.ratings[g.id] || {})[r.number], owns(r, g.id))).join('')}<td class="acol">${fmt(r.avg)}</td></tr>`).join('')}</tbody>
+      <tfoot><tr class="gt-foot">${people.map(g => `<td>${fmt(given(g))}</td>`).join('')}<td class="acol"></td></tr></tfoot>
+    </table></div>
+  </div>
   ${anyOwn ? '<p class="legend"><span class="pip v1 own sw"></span>Vinho que a pessoa trouxe</p>' : ''}</div>`;
 }
 
